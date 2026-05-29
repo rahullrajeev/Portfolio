@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-zinc-50: #f3eeda;
+  --color-zinc-100: #e4dfca;
+  --color-zinc-200: #d1cbb5;
+  --color-zinc-300: #bdba9b;
+  --color-zinc-400: #a2ae86;
+  --color-zinc-500: #819266;
+  --color-zinc-600: #65784f;
+  --color-zinc-700: #52633e;
+  --color-zinc-800: #425232;
+  --color-zinc-900: #3c4a30;
+  --color-zinc-950: #26301d;
+
+  --color-white: #f3eeda;
+  --color-black: #3c4a30;
+
+  --font-sans: "Helvetica Neue Regular", "Helvetica Neue", Helvetica, Arial, var(--font-sans), sans-serif;
+  --font-display: "Druk Condensed Super", "Druk Condensed", Impact, var(--font-display), sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+@layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-zinc-50);
+    color: var(--color-zinc-900);
+  }
+}
