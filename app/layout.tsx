@@ -40,7 +40,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${playfair.variable}`} suppressHydrationWarning>
       <body className="antialiased bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black" suppressHydrationWarning>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <SmoothScroll>
           <CustomCursor />
           <Navigation />
@@ -56,7 +56,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 "sameAs": [
                   "https://github.com/rahullrajeev",
                   "https://linkedin.com/in/rahullrajeev",
-                  "https://instagram.com/r4hull_"
+                  "https://instagram.com/waybyrhl_"
                 ]
               }`,
             }}
