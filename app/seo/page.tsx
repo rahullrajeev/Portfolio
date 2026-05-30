@@ -3,6 +3,7 @@
 import { PageTransition } from "@/components/layout/page-transition";
 import { Grid } from "@/components/ui/grid";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 export default function SEOExpertise() {
   const skills = [
@@ -25,6 +26,16 @@ export default function SEOExpertise() {
 
   return (
     <PageTransition>
+      <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none opacity-10 dark:opacity-[0.03] mix-blend-multiply dark:mix-blend-luminosity">
+        <Image
+          src="/montera.jpeg"
+          alt="Minimal nature background"
+          fill
+          sizes="100vw"
+          className="object-cover object-center grayscale"
+          priority
+        />
+      </div>
       <section className="min-h-screen py-24 px-6 md:px-12 max-w-6xl mx-auto">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
@@ -61,8 +72,8 @@ export default function SEOExpertise() {
               ))}
             </motion.div>
             
-            <div className="mt-16 p-8 bg-zinc-50 border border-zinc-200 rounded-2xl">
-               <h3 className="font-display font-bold tracking-widest text-xs text-zinc-700 dark:text-zinc-400 mb-4">Strategic Focus</h3>
+            <div className="mt-16 p-8 bg-[#2b3a20] dark:bg-[#a0b090] rounded-2xl text-zinc-50 dark:text-[#18181b] transition-colors border border-transparent">
+               <h3 className="font-display font-bold tracking-widest text-xs opacity-80 mb-4">Strategic Focus</h3>
                <p className="font-light text-lg">
                  Transitioning beyond traditional keyword stuffing to holistic architecture: focusing on <strong>AEO</strong> and <strong>GEO</strong> to ensure content is digested properly by LLMs and AI Overviews, while maintaining rigid Technical SEO standards for legacy crawlers.
                </p>
@@ -84,7 +95,7 @@ export default function SEOExpertise() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.15 }}
                     key={i} 
-                    className="border-b border-zinc-200 pb-12 last:border-0"
+                    className="border-b border-zinc-200 dark:border-zinc-800 pb-12 last:border-0"
                   >
                     <h3 className="font-display text-xl font-bold mb-4">{job.title}</h3>
                     <p className="text-zinc-800 dark:text-zinc-300 font-light leading-relaxed">{job.desc}</p>

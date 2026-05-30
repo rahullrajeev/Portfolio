@@ -31,12 +31,12 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
 
       {/* Fade Overlay */}
       <motion.div
-        className="fixed inset-0 w-full h-full bg-zinc-50 z-[99999] pointer-events-none"
+        className="fixed inset-0 w-full h-full bg-zinc-50 dark:bg-zinc-950 z-[99999] pointer-events-none mix-blend-normal"
         initial={{ opacity: 1 }} 
         animate={{ 
           opacity: isAnimatingOut ? 1 : 0, 
         }}
-        transition={{ duration: 0.25, ease: "easeInOut" }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       />
     </>
   );

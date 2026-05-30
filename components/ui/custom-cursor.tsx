@@ -2,28 +2,51 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+import { usePathname } from "next/navigation";
 
 export function CustomCursor() {
   const [isPointer, setIsPointer] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isDeviceWithPointer, setIsDeviceWithPointer] = useState(false);
+  const pathname = usePathname();
+
   
   // Mouse position values
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
   // Spring configurations for smooth trailing
-  const springConfig = { damping: 20, stiffness: 400, mass: 0.2 };
+  const springConfig = { damping: 25, stiffness: 300, mass: 0.1 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
-  
-  // Quick response config for the dot
-  const dotSpringConfig = { damping: 40, stiffness: 600, mass: 0.1 };
-  const dotXSpring = useSpring(cursorX, dotSpringConfig);
-  const dotYSpring = useSpring(cursorY, dotSpringConfig);
+
+  // Reset pointer state on route change
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsPointer(false);
+    if (isDeviceWithPointer) {
+      document.body.style.cursor = 'none';
+    }
+  }, [pathname, isDeviceWithPointer]);
 
   useEffect(() => {
-    // Hide default cursor
-    document.body.style.cursor = 'none';
+    const checkEnvironment = () => {
+      const isTouch = (typeof window !== "undefined" && ('ontouchstart' in window || navigator.maxTouchPoints > 0));
+      const isHoverable = typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      
+      if (isHoverable && !isTouch) {
+        setIsDeviceWithPointer(true);
+        document.body.style.cursor = 'none';
+        return true;
+      } else {
+        setIsDeviceWithPointer(false);
+        document.body.style.cursor = 'auto';
+        return false;
+      }
+    };
+
+    const isCapable = checkEnvironment();
+    if (!isCapable) return;
 
     let hasMoved = false;
 
@@ -51,26 +74,28 @@ export function CustomCursor() {
 
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
+    const handleTouchStart = () => setIsVisible(false);
 
     window.addEventListener("mousemove", updatePosition);
     document.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("mouseenter", handleMouseEnter);
+    window.addEventListener("touchstart", handleTouchStart);
     
     return () => {
       document.body.style.cursor = 'auto';
       window.removeEventListener("mousemove", updatePosition);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
+      window.removeEventListener("touchstart", handleTouchStart);
     };
   }, [cursorX, cursorY]);
 
-  if (!isVisible) return null;
+  if (!isDeviceWithPointer || !isVisible) return null;
 
   return (
     <>
-      {/* Outer trailing circle */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-zinc-900/40 rounded-full mix-blend-difference pointer-events-none z-[9998]"
+        className="fixed top-0 left-0 w-6 h-6 border-[1.5px] border-zinc-500/50 rounded-full pointer-events-none z-[9999] flex items-center justify-center"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -79,24 +104,20 @@ export function CustomCursor() {
         }}
         animate={{
           scale: isPointer ? 1.5 : 1,
-          opacity: isPointer ? 0 : 1,
-        }}
-        transition={{ duration: 0.2 }}
-      />
-      {/* Inner precise dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-2.5 h-2.5 bg-white rounded-full mix-blend-difference pointer-events-none z-[9999]"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          scale: isPointer ? 3 : 1,
+          backgroundColor: isPointer ? "rgba(113, 113, 122, 0.1)" : "transparent",
+          borderColor: isPointer ? "rgba(113, 113, 122, 0.8)" : "rgba(113, 113, 122, 0.5)"
         }}
         transition={{ duration: 0.15 }}
-      />
+      >
+        <motion.div 
+          className="w-1.5 h-1.5 bg-zinc-500 rounded-full"
+          animate={{
+            scale: isPointer ? 0 : 1,
+            opacity: isPointer ? 0 : 1
+          }}
+          transition={{ duration: 0.15 }}
+        />
+      </motion.div>
     </>
   );
 }

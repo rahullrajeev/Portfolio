@@ -17,6 +17,16 @@ export default function About() {
 
   return (
     <PageTransition>
+      <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none opacity-10 dark:opacity-[0.03] mix-blend-multiply dark:mix-blend-luminosity">
+        <Image
+          src="/IMG_0571.JPG.jpeg"
+          alt="Minimal nature background"
+          fill
+          sizes="100vw"
+          className="object-cover object-center grayscale"
+          priority
+        />
+      </div>
       <section className="min-h-screen py-24 px-6 md:px-12 max-w-6xl mx-auto">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
@@ -35,7 +45,7 @@ export default function About() {
         <Grid>
           <div className="col-span-4 md:col-span-8 lg:col-span-8 flex flex-col gap-12">
             <Reveal direction="up" delay={0.3}>
-              <div className="space-y-6 text-base font-light font-display leading-relaxed text-zinc-800">
+              <div className="space-y-6 text-base font-light font-display leading-relaxed text-zinc-800 dark:text-zinc-300">
                 <p>
                   My foundation lies in Computer Science Engineering, where I cultivated a rigorous understanding of logic and architecture. However, my curiosity led me into the dynamic realm of Digital Marketing and SEO, merging technical precision with strategic visibility.
                 </p>
@@ -46,8 +56,8 @@ export default function About() {
             </Reveal>
 
             <div className="space-y-8">
-               <h3 className="font-display text-2xl font-bold tracking-tight pb-4 border-b border-zinc-200">Education & Milestones</h3>
-               <div className="relative pl-8 border-l-2 border-zinc-200 space-y-12">
+               <h3 className="font-display text-2xl font-bold tracking-tight pb-4 border-b border-zinc-200 dark:border-zinc-800">Education & Milestones</h3>
+               <div className="relative pl-8 border-l-2 border-zinc-200 dark:border-zinc-800 space-y-12">
                  {[
                    { year: "Present", role: "Generative AI Developer", detail: "Developing SaaS tools and AI-driven platforms like ModuSpark." },
                    { year: "2024 - Present", role: "SEO & Digital Marketing", detail: "Mastering technical SEO, AEO, and performance analytics." },
@@ -61,9 +71,9 @@ export default function About() {
                      key={item.year} 
                      className="relative"
                    >
-                     <div className="absolute w-4 h-4 bg-black rounded-full -left-[41px] top-1"></div>
+                     <div className="absolute w-4 h-4 bg-black dark:bg-white rounded-full -left-[41px] top-1"></div>
                      <div className="font-mono text-sm text-zinc-700 dark:text-zinc-400 mb-1">{item.year}</div>
-                     <div className="text-xl font-bold mb-2">{item.role}</div>
+                     <div className="text-xl font-bold mb-2 text-zinc-900 dark:text-zinc-50">{item.role}</div>
                      <div className="text-zinc-800 dark:text-zinc-300 font-display font-light">{item.detail}</div>
                    </motion.div>
                  ))}

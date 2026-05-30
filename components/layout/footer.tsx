@@ -35,15 +35,20 @@ export function Footer() {
 
         <div className="h-[1px] w-full bg-white/10" />
 
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 text-sm tracking-wide opacity-60">
-          <div className="flex flex-wrap gap-8">
+        <div className="flex flex-col md:grid md:grid-cols-3 gap-8 items-start md:items-center text-sm tracking-wide opacity-60 w-full">
+          <div className="flex flex-wrap gap-8 md:justify-start">
             <a href="https://github.com/rahullrajeev/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">GitHub</a>
             <a href="http://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">LinkedIn</a>
             <a href="mailto:r4hullrajeev@gmail.com" className="hover:opacity-100 transition-opacity">Email</a>
           </div>
           
-          <div className="font-mono text-xs">
-            © {new Date().getFullYear()} RAHUL RAJEEV. ALL RIGHTS RESERVED.
+          <div className="font-mono text-xs md:text-center w-full">
+            madebyrhl.
+          </div>
+          
+          <div className="font-mono text-xs flex flex-col items-start md:items-end gap-1 w-full">
+            <span>© {new Date().getFullYear()} RAHUL RAJEEV</span>
+            <span>ALL RIGHTS RESERVED.</span>
           </div>
         </div>
 

@@ -22,7 +22,7 @@ export default function Projects() {
         </motion.div>
 
         {/* ModuSpark Featured Case Study */}
-        <div className="bg-white rounded-3xl overflow-hidden border border-zinc-200 shadow-sm">
+        <div className="bg-white dark:bg-zinc-950/50 rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm">
           <div className="bg-zinc-950 p-8 md:p-12 text-white text-center flex flex-col items-center">
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
@@ -90,8 +90,8 @@ export default function Projects() {
              </div>
           </Grid>
           
-          <div className="p-6 md:p-8 bg-white">
-            <div className="w-full bg-zinc-950 rounded-xl border border-zinc-200 overflow-hidden relative shadow-inner flex items-center justify-center p-2" style={{ height: '60vh', minHeight: '500px' }}>
+          <div className="p-6 md:p-8 bg-white dark:bg-zinc-950/80">
+            <div className="w-full bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden relative shadow-inner flex items-center justify-center p-2" style={{ height: '60vh', minHeight: '500px' }}>
                 <iframe 
                   src="https://moduspark-ai-component-studio.vercel.app/" 
                   title="ModuSpark AI Component Studio"

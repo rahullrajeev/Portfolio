@@ -45,7 +45,7 @@ export function Navigation() {
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed top-0 left-0 z-50 px-6 py-6 pointer-events-auto"
       >
-        <Link href="/" className="text-3xl font-bold tracking-tighter lowercase text-[#3c4a30]">
+        <Link href="/" className="text-3xl font-bold tracking-tighter lowercase text-[#3c4a30] dark:text-zinc-50">
           rr.
         </Link>
       </motion.div>
