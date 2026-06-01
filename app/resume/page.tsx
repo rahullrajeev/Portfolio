@@ -4,6 +4,7 @@ import { PageTransition } from "@/components/layout/page-transition";
 import { motion } from "motion/react";
 import { useState } from "react";
 import Image from "next/image";
+import { Download } from "lucide-react";
 
 export default function Resume() {
   const [activeResume, setActiveResume] = useState<"SD" | "SEO">("SD");
@@ -63,21 +64,30 @@ export default function Resume() {
                <div className="w-full h-full bg-[#f8f9fa] dark:bg-zinc-950/50 overflow-y-auto">
                  <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 min-h-full py-12 px-8 md:py-16 md:px-16 text-zinc-900 dark:text-zinc-100 shadow-sm border-x border-zinc-100 dark:border-zinc-800 font-sans">
                    <header className="mb-10 text-left border-b border-zinc-200 dark:border-zinc-800 pb-8">
-                     <h1 className="font-display text-4xl md:text-5xl font-display font-bold tracking-tight mb-2">Rahul Rajeev</h1>
-                     <h2 className="font-display text-xl md:text-2xl font-light mb-6 text-zinc-600 dark:text-zinc-400 tracking-widest font-display">Software Developer</h2>
+                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                       <div>
+                         <h1 className="font-display text-4xl md:text-5xl font-display font-bold tracking-tight mb-2">Rahul Rajeev</h1>
+                         <h2 className="font-display text-xl md:text-2xl font-light text-zinc-600 dark:text-zinc-400 tracking-widest font-display">Full Stack Ai Developer</h2>
+                       </div>
+                       <a href="/Rahul.ai.pdf" target="_blank" rel="noopener noreferrer" className="mt-4 md:mt-0 flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-sm font-medium hover:opacity-80 transition-opacity">
+                         <Download size={16} />
+                         Download Resume
+                       </a>
+                     </div>
                      <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs md:text-sm font-mono text-zinc-500 dark:text-zinc-400">
                        <span>Kochi, India</span> •
                        <span>+91-6282981465</span> •
                        <a href="mailto:r4hullrajeev@gmail.com" className="hover:text-black dark:hover:text-white transition-colors">r4hullrajeev@gmail.com</a> •
                        <a href="https://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">linkedin.com/in/rahullrajeev</a> •
-                       <a href="https://github.com/rahullrajeev/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">github.com/rahullrajeev/</a>
+                       <a href="https://github.com/rahullrajeev/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">github.com/rahullrajeev/</a> •
+                       <a href="https://rahull-portfolio.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">rahull-portfolio.vercel.app</a>
                      </div>
                    </header>
 
                    <section className="mb-10">
                      <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Professional Summary</h3>
                      <p className="font-light leading-relaxed text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
-                       Results-driven and innovative Software Developer with a B.Tech in Computer Science Engineering, specializing in AI-powered web application development. Skilled in modern frontend technologies, AI-assisted development workflows, responsive UI design, and web application customization. Experienced in building intelligent, user-focused digital products with a strong emphasis on performance, scalability, and seamless user experiences. Passionate about leveraging AI and modern technologies to create impactful software solutions.
+                       Results-driven and innovative Full-Stack AI Developer with a B.Tech in Computer Science Engineering, specializing in AI-powered web application development and Generative AI solutions. Skilled in modern web technologies, AI integration, AI-assisted development workflows, responsive UI design, and full-stack application development. Experienced in building intelligent, user-focused digital products with a strong emphasis on performance, scalability, and seamless user experiences. Passionate about leveraging AI and modern software engineering practices to create impactful products and innovative software solutions.
                      </p>
                    </section>
 
@@ -107,10 +117,10 @@ export default function Resume() {
                        <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2 gap-2">
                          <h4 className="font-display text-lg font-bold text-black dark:text-white tracking-tight font-display">ModuSpark AI Component Studio</h4>
                        </div>
-                       <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2 italic">AI-powered component generator built with Next.js, React, TypeScript, Tailwind CSS, and Google Gemini AI.</p>
+                       <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2 italic">Tech Stack: Next.js, React, TypeScript, Tailwind CSS, Google Gemini API, Monaco Editor, Sandpack, Vercel</p>
                        <a href="https://moduspark-ai-component-studio.vercel.app/" target="_blank" rel="noreferrer" className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors underline decoration-zinc-300 dark:decoration-zinc-700 hover:decoration-black dark:hover:decoration-white mb-4 block break-all font-mono">https://moduspark-ai-component-studio.vercel.app/</a>
                        <ul className="list-disc pl-5 space-y-2 font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
-                         <li>Developed an AI-driven platform that generates modern React and Tailwind CSS UI components from natural language prompts.</li>
+                         <li>Developed an AI-powered platform that converts natural language prompts into production-ready React and Tailwind CSS components using Google Gemini AI.</li>
                          <li>Integrated Google Gemini AI for advanced generative capabilities, transforming text descriptions into functional code.</li>
                          <li>Implemented a live code preview feature using Sandpack, enabling real-time visualization of generated components.</li>
                          <li>Incorporated Monaco Editor for an editable code sandbox, allowing users to modify and refine generated code directly within the application.</li>
@@ -139,13 +149,22 @@ export default function Resume() {
                <div className="w-full h-full bg-[#f8f9fa] dark:bg-zinc-950/50 overflow-y-auto">
                  <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 min-h-full py-12 px-8 md:py-16 md:px-16 text-zinc-900 dark:text-zinc-100 shadow-sm border-x border-zinc-100 dark:border-zinc-800 font-sans">
                    <header className="mb-10 text-left border-b border-zinc-200 dark:border-zinc-800 pb-8">
-                     <h1 className="font-display text-4xl md:text-5xl font-display font-bold tracking-tight mb-2">Rahul Rajeev</h1>
-                     <h2 className="font-display text-xl md:text-2xl font-light mb-6 text-zinc-600 dark:text-zinc-400 tracking-widest font-display">SEO Specialist</h2>
+                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                       <div>
+                         <h1 className="font-display text-4xl md:text-5xl font-display font-bold tracking-tight mb-2">Rahul Rajeev</h1>
+                         <h2 className="font-display text-xl md:text-2xl font-light text-zinc-600 dark:text-zinc-400 tracking-widest font-display">SEO Specialist</h2>
+                       </div>
+                       <a href="/Rahul.seo.pdf" target="_blank" rel="noopener noreferrer" className="mt-4 md:mt-0 flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-sm font-medium hover:opacity-80 transition-opacity">
+                         <Download size={16} />
+                         Download Resume
+                       </a>
+                     </div>
                      <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs md:text-sm font-mono text-zinc-500 dark:text-zinc-400">
                        <span>Kochi, India</span> •
                        <span>+91-6282981465</span> •
                        <a href="mailto:r4hullrajeev@gmail.com" className="hover:text-black dark:hover:text-white transition-colors">r4hullrajeev@gmail.com</a> •
-                       <a href="https://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">linkedin.com/in/rahullrajeev</a>
+                       <a href="https://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">linkedin.com/in/rahullrajeev</a> •
+                       <a href="https://rahull-portfolio.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">rahull-portfolio.vercel.app</a>
                      </div>
                    </header>
 
@@ -185,7 +204,7 @@ export default function Resume() {
                      <div className="mb-8">
                        <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2 gap-2">
                          <h4 className="font-display text-lg font-bold text-black dark:text-white tracking-tight font-display">SEO Specialist <span className="font-normal text-sm text-zinc-500 dark:text-zinc-400 normal-case tracking-normal font-sans">— Vidhyarthi Mithram</span></h4>
-                         <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400 tracking-wider">Kochi, India | 2025</span>
+                         <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400 tracking-wider">Kochi, India | 2025 – Present</span>
                        </div>
                        <ul className="list-disc pl-5 space-y-2 font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
                          <li>Performing complete SEO management including keyword research, on-page SEO, off-page SEO, and technical SEO optimization.</li>
