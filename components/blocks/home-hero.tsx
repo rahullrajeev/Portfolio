@@ -27,14 +27,14 @@ export function HomeHero() {
   };
 
   return (
-    <section className="min-h-[calc(100svh-8rem)] pt-4 md:pt-8 pb-8 md:pb-12 px-6 md:px-12 flex flex-col justify-center items-center relative overflow-hidden">
+    <section className="min-h-[calc(100svh-8rem)] pt-4 md:pt-8 lg:pt-2 pb-8 md:pb-12 lg:pb-4 px-6 md:px-12 flex flex-col justify-center items-center relative overflow-hidden">
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
         className="max-w-7xl mx-auto w-full flex flex-col justify-center text-center relative z-10"
       >
-        <div className="w-full flex justify-center mb-10 md:mb-8 lg:mb-10 relative z-30 pt-4 md:pt-0">
+        <div className="w-full flex justify-center mb-10 md:mb-8 lg:mb-24 relative z-30 pt-4 md:pt-0 lg:-mt-8">
           <motion.div
             variants={item}
             className="flex items-center gap-4 md:gap-6 cursor-default"
@@ -45,13 +45,13 @@ export function HomeHero() {
           </motion.div>
         </div>
 
-        <div className="relative w-full flex justify-center py-6 md:py-12 lg:py-16">
+        <div className="relative w-full flex justify-center py-6 md:py-12 lg:py-6">
           <div className="relative w-fit mx-auto flex flex-col mb-[-5px] group">
             {/* Main Text Container */}
-            <div className="relative flex flex-col items-start w-full -space-y-3 md:-space-y-6 lg:-space-y-10 cursor-default">
+            <div className="relative flex flex-col items-start w-full -space-y-3 md:-space-y-6 lg:-space-y-8 cursor-default">
               <motion.div
                 variants={item}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none w-[150%] flex justify-center h-[280px] md:h-[450px] lg:h-[500px] mt-4 md:mt-8"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none w-[150%] flex justify-center h-[280px] md:h-[450px] lg:h-[550px] mt-4 md:mt-8 lg:mt-4"
               >
                 <Image
                   src="/rhll.png"
@@ -65,7 +65,7 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`seo-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[8vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                className={`seo-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[6.2vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
                   hoveredText === "seo"
                     ? "z-[20] scale-[1.03] -translate-x-2 [-webkit-text-fill-color:currentColor]"
                     : hoveredText !== null
@@ -83,7 +83,7 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`dev-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[8vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                className={`dev-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[6.2vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
                   hoveredText === "dev"
                     ? "z-[20] scale-[1.03] translate-x-2 [-webkit-text-fill-color:currentColor]"
                     : hoveredText !== null
@@ -101,7 +101,7 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`web-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[8vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                className={`web-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[6.2vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
                   hoveredText === "web"
                     ? "z-[20] scale-[1.03] translate-x-4 [-webkit-text-fill-color:currentColor]"
                     : hoveredText !== null
@@ -127,7 +127,7 @@ export function HomeHero() {
           </div>
         </div>
 
-        <div className="w-full flex flex-col lg:flex-row items-center lg:items-end justify-between mt-8 md:mt-8 lg:mt-10 gap-6 md:gap-8 z-30 relative">
+        <div className="w-full flex flex-col lg:flex-row items-center lg:items-end justify-between mt-8 md:mt-8 lg:mt-4 gap-6 md:gap-8 z-30 relative">
           <div className="flex-1 hidden lg:block" />
 
           <motion.div
