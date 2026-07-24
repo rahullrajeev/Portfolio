@@ -110,7 +110,7 @@ export default function Home() {
             { title: "AI Integration", desc: "Orchestrating Gemini & other LLMs to synthesize intelligence within UI elements for seamless user workflows.", num: "01" },
             { title: "Frontend Engineering", desc: "Crafting fluid, high-performance interfaces with React, Next.js, and complex animation libraries.", num: "02" },
             { title: "Technical SEO", desc: "Architecting sites for maximal crawlability, indexing, and dominance in search via advanced technical strategies.", num: "03" },
-            { title: "SaaS Architecture", desc: "Building scalable, maintainable application foundations tailored for modern web products.", num: "04" },
+            { title: "Web Design & Development", desc: "Designing and developing responsive, high-converting websites and landing pages tailored for modern web products.", num: "04" },
           ].map((exp, i) => (
              <div key={exp.num} className="col-span-4 md:col-span-4 lg:col-span-6 bg-zinc-50 dark:bg-zinc-950 hover:bg-zinc-900 dark:hover:bg-zinc-50 hover:scale-105 hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_rgba(255,255,255,0.05)] hover:z-50 z-0 p-10 md:p-12 group transition-all duration-300 ease-out relative cursor-pointer outline outline-1 outline-transparent hover:outline-zinc-200 dark:hover:outline-zinc-800">
                 <div className="text-zinc-500 dark:text-zinc-500 font-mono text-lg mb-6 group-hover:text-zinc-400 dark:group-hover:text-zinc-600 transition-colors duration-500">{exp.num}</div>

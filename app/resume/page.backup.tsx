@@ -67,7 +67,7 @@ export default function Resume() {
                      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                        <div>
                          <h1 className="font-display text-4xl md:text-5xl font-display font-bold tracking-tight mb-2">Rahul Rajeev</h1>
-                         <h2 className="font-display text-xl md:text-2xl font-light text-zinc-600 dark:text-zinc-400 tracking-widest font-display">Full Stack AI Developer & Web Developer</h2>
+                         <h2 className="font-display text-xl md:text-2xl font-light text-zinc-600 dark:text-zinc-400 tracking-widest font-display">Full Stack Ai Developer</h2>
                        </div>
                        <a href="/Rahul.ai.pdf" target="_blank" rel="noopener noreferrer" className="mt-4 md:mt-0 flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-sm font-medium hover:opacity-80 transition-opacity">
                          <Download size={16} />

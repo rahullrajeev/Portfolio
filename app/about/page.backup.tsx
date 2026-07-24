@@ -59,7 +59,7 @@ export default function About() {
                <h3 className="font-display text-2xl font-bold tracking-tight pb-4 border-b border-zinc-200 dark:border-zinc-800">Education & Milestones</h3>
                <div className="relative pl-8 border-l-2 border-zinc-200 dark:border-zinc-800 space-y-12">
                  {[
-                   { year: "Present", role: "Generative AI Developer & Web Developer", detail: "Developing SaaS tools, AI-driven platforms like ModuSpark, and modern responsive websites." },
+                   { year: "Present", role: "Generative AI Developer", detail: "Developing SaaS tools and AI-driven platforms like ModuSpark." },
                    { year: "2024 - Present", role: "SEO & Digital Marketing", detail: "Mastering technical SEO, AEO, and performance analytics." },
                    { year: "Prior", role: "B.Tech Computer Science", detail: "Core algorithmic foundations and system architecture." }
                  ].map((item, i) => (

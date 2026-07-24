@@ -22,7 +22,7 @@ export default function SEOExpertise() {
     "Technical SEO", "On-page SEO", "Off-page SEO", "Keyword Research",
     "Google Analytics", "Search Console", "Semrush", "Content Strategy",
     "AEO (Answer Engine Optimization)", "GEO (Generative Engine Optimization)",
-    "Landing Page Optimization", "Crawlability Improvements", 
+    "Landing Page Optimization", "Web Development & Designing",
     "SERP Optimization", "Indexing Optimization"
   ];
 

@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export function HomeHero() {
-  const [hoveredText, setHoveredText] = useState<"dev" | "seo" | "web" | null>(null);
+  const [hoveredText, setHoveredText] = useState<"dev" | "seo" | null>(null);
 
   const container = {
     hidden: { opacity: 0 },
@@ -65,28 +65,10 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`seo-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
-                  hoveredText === "seo"
-                    ? "z-[20] scale-[1.03] -translate-x-2 [-webkit-text-fill-color:currentColor]"
-                    : hoveredText !== null
-                    ? "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
-                    : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:currentColor]"
-                }`}
-                style={{ WebkitTextStroke: "1.5px currentColor" }}
-                onMouseEnter={() => setHoveredText("seo")}
-                onMouseLeave={() => setHoveredText(null)}
-                onTouchStart={() => setHoveredText("seo")}
-                onTouchEnd={() => setHoveredText(null)}
-              >
-                SEO Specialist
-              </motion.h2>
-
-              <motion.h2
-                variants={item}
                 className={`dev-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
                   hoveredText === "dev"
-                    ? "z-[20] scale-[1.03] translate-x-2 [-webkit-text-fill-color:currentColor]"
-                    : hoveredText !== null
+                    ? "z-[20] scale-[1.03] -translate-x-2 [-webkit-text-fill-color:currentColor]"
+                    : hoveredText === "seo"
                     ? "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
                     : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:currentColor]"
                 }`}
@@ -101,20 +83,18 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`web-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
-                  hoveredText === "web"
-                    ? "z-[20] scale-[1.03] translate-x-4 [-webkit-text-fill-color:currentColor]"
-                    : hoveredText !== null
-                    ? "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
-                    : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:currentColor]"
+                className={`seo-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                  hoveredText === "seo"
+                    ? "z-[20] scale-[1.03] translate-x-2 [-webkit-text-fill-color:currentColor]"
+                    : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
                 }`}
                 style={{ WebkitTextStroke: "1.5px currentColor" }}
-                onMouseEnter={() => setHoveredText("web")}
+                onMouseEnter={() => setHoveredText("seo")}
                 onMouseLeave={() => setHoveredText(null)}
-                onTouchStart={() => setHoveredText("web")}
+                onTouchStart={() => setHoveredText("seo")}
                 onTouchEnd={() => setHoveredText(null)}
               >
-                & Web Developer
+                & SEO Specialist
               </motion.h2>
             </div>
 
