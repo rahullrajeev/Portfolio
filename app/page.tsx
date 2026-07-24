@@ -81,6 +81,9 @@ export default function Home() {
                     src="https://moduspark-ai-component-studio.vercel.app/" 
                     title="ModuSpark AI Component Studio"
                     loading="lazy"
+                    sandbox="allow-scripts allow-same-origin"
+                    tabIndex={-1}
+                    aria-hidden="true"
                     className="absolute inset-0 w-full h-full border-none opacity-80 pointer-events-none origin-top"
                     style={{ transform: "scale(0.8)", width: "125%", height: "125%" }}
                   />

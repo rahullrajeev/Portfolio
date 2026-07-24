@@ -4,8 +4,11 @@ import { motion } from "motion/react";
 import { TransitionLink as Link } from "@/components/ui/transition-link";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 export function HomeHero() {
+  const [hoveredText, setHoveredText] = useState<"dev" | "seo" | null>(null);
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -62,20 +65,34 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className="dev-text relative z-[1] active:z-[20] hover:z-[20] text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform active:scale-[1.03] active:-translate-x-2 hover:scale-[1.03] hover:-translate-x-2 text-[#2b3a20] dark:text-[#a0b090] group-has-[.seo-text:active]:[-webkit-text-fill-color:transparent] group-has-[.seo-text:hover]:[-webkit-text-fill-color:transparent] [-webkit-text-fill-color:currentColor]"
+                className={`dev-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                  hoveredText === "dev"
+                    ? "z-[20] scale-[1.03] -translate-x-2 [-webkit-text-fill-color:currentColor]"
+                    : hoveredText === "seo"
+                    ? "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
+                    : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:currentColor]"
+                }`}
                 style={{ WebkitTextStroke: "1.5px currentColor" }}
-                onTouchStart={() => {}}
-                onClick={() => {}}
+                onMouseEnter={() => setHoveredText("dev")}
+                onMouseLeave={() => setHoveredText(null)}
+                onTouchStart={() => setHoveredText("dev")}
+                onTouchEnd={() => setHoveredText(null)}
               >
                 Generative AI Developer
               </motion.h2>
 
               <motion.h2
                 variants={item}
-                className="seo-text relative z-[1] active:z-[20] hover:z-[20] text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform active:scale-[1.03] active:translate-x-2 hover:scale-[1.03] hover:translate-x-2 text-[#2b3a20] dark:text-[#a0b090] [-webkit-text-fill-color:transparent] active:[-webkit-text-fill-color:currentColor] hover:[-webkit-text-fill-color:currentColor]"
+                className={`seo-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                  hoveredText === "seo"
+                    ? "z-[20] scale-[1.03] translate-x-2 [-webkit-text-fill-color:currentColor]"
+                    : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
+                }`}
                 style={{ WebkitTextStroke: "1.5px currentColor" }}
-                onTouchStart={() => {}}
-                onClick={() => {}}
+                onMouseEnter={() => setHoveredText("seo")}
+                onMouseLeave={() => setHoveredText(null)}
+                onTouchStart={() => setHoveredText("seo")}
+                onTouchEnd={() => setHoveredText(null)}
               >
                 & SEO Specialist
               </motion.h2>

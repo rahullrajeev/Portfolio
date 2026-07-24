@@ -61,14 +61,14 @@ export function CustomCursor() {
       const target = e.target as HTMLElement;
       if (!target) return;
       
-      const isPointerCursor = target.nodeType === 1 ? window.getComputedStyle(target).cursor === "pointer" : false;
-      
       setIsPointer(
-        isPointerCursor ||
         (target.tagName && target.tagName.toLowerCase() === "a") ||
         (target.tagName && target.tagName.toLowerCase() === "button") ||
         (target.closest && target.closest("a") !== null) ||
-        (target.closest && target.closest("button") !== null)
+        (target.closest && target.closest("button") !== null) ||
+        (target.closest && target.closest("[role='button']") !== null) ||
+        (target.classList && target.classList.contains("cursor-pointer")) ||
+        (target.closest && target.closest(".cursor-pointer") !== null)
       );
     };
 

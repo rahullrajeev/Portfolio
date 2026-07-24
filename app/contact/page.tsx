@@ -3,7 +3,7 @@
 import { PageTransition } from "@/components/layout/page-transition";
 import { Grid } from "@/components/ui/grid";
 import { motion, AnimatePresence } from "motion/react";
-import { Github, Linkedin, Mail, Phone, Instagram, Send, CheckCircle2 } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, Instagram, Send, CheckCircle2, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -100,6 +100,7 @@ export default function Contact() {
                      { icon: Linkedin, label: "LinkedIn", href: "http://www.linkedin.com/in/rahullrajeev" },
                      { icon: Github, label: "GitHub", href: "https://github.com/rahullrajeev/" },
                      { icon: Phone, label: "+91 6282981465", href: "tel:+916282981465" },
+                     { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/916282981465" },
                      { icon: Mail, label: "r4hullrajeev@gmail.com", href: "mailto:r4hullrajeev@gmail.com" },
                      { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/waybyrhl?igsh=MWRtZHRpeHR4azlhbQ==" },
                    ].map((social, i) => (
