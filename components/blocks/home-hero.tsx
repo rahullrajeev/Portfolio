@@ -65,7 +65,7 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`seo-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                className={`seo-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[8vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
                   hoveredText === "seo"
                     ? "z-[20] scale-[1.03] -translate-x-2 [-webkit-text-fill-color:currentColor]"
                     : hoveredText !== null
@@ -83,7 +83,7 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`dev-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                className={`dev-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[8vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
                   hoveredText === "dev"
                     ? "z-[20] scale-[1.03] translate-x-2 [-webkit-text-fill-color:currentColor]"
                     : hoveredText !== null
@@ -101,7 +101,7 @@ export function HomeHero() {
 
               <motion.h2
                 variants={item}
-                className={`web-text relative text-[11vw] md:text-[7vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
+                className={`web-text relative whitespace-nowrap text-[8.6vw] sm:text-[10vw] md:text-[7.5vw] lg:text-[8vw] font-display font-bold tracking-tighter leading-[0.85] m-0 p-0 transition-all duration-300 ease-out transform-gpu will-change-transform text-[#2b3a20] dark:text-[#a0b090] ${
                   hoveredText === "web"
                     ? "z-[20] scale-[1.03] translate-x-4 [-webkit-text-fill-color:currentColor]"
                     : hoveredText !== null
