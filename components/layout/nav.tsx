@@ -34,6 +34,10 @@ export function Navigation() {
     }
   });
 
+  if (pathname === "/seo-demo") {
+    return null;
+  }
+
   return (
     <>
       <motion.div

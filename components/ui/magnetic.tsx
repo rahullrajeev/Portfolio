@@ -1,17 +1,23 @@
 "use client";
 
-import { motion } from "motion/react";
-import React, { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "motion/react";
+import React, { useRef } from "react";
 
 export function Magnetic({
   children,
-  strength = 15, // How far it moves
+  strength = 15,
 }: {
   children: React.ReactElement;
   strength?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+
+  const springConfig = { stiffness: 250, damping: 20, mass: 0.1 };
+  const x = useSpring(rawX, springConfig);
+  const y = useSpring(rawY, springConfig);
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -19,11 +25,13 @@ export function Magnetic({
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
-    setPosition({ x: (middleX * strength) / width, y: (middleY * strength) / height });
+    rawX.set((middleX * strength) / width);
+    rawY.set((middleY * strength) / height);
   };
 
   const reset = () => {
-    setPosition({ x: 0, y: 0 });
+    rawX.set(0);
+    rawY.set(0);
   };
 
   return (
@@ -31,11 +39,11 @@ export function Magnetic({
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      style={{ x, y }}
       className="inline-block"
     >
       {children}
     </motion.div>
   );
 }
+

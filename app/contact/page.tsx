@@ -29,32 +29,32 @@ export default function Contact() {
           priority
         />
       </div>
-      <section className="min-h-screen pt-24 pb-16 px-6 md:px-12 max-w-6xl mx-auto flex flex-col justify-center">
+      <section className="min-h-screen pt-16 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto flex flex-col justify-center">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
-           className="mb-16 text-center mt-8"
+           className="mb-10 sm:mb-16 text-center mt-4 sm:mt-8"
         >
-          <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tighter mb-4 leading-none">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter mb-3 sm:mb-4 leading-none">
             Say <span className="text-zinc-500 dark:text-zinc-300">Hello</span>
           </h1>
-          <a href="mailto:r4hullrajeev@gmail.com" className="text-xl md:text-2xl font-sans font-light hover:opacity-50 transition-opacity">
+          <a href="mailto:r4hullrajeev@gmail.com" className="text-lg sm:text-xl md:text-2xl font-sans font-light hover:opacity-50 transition-opacity break-all">
             r4hullrajeev@gmail.com
           </a>
         </motion.div>
 
         <Grid>
-          <div className="col-span-4 md:col-span-4 lg:col-span-6 order-2 md:order-1 flex flex-col gap-16">
+          <div className="col-span-4 md:col-span-4 lg:col-span-6 order-2 md:order-1 flex flex-col gap-10 sm:gap-16">
             <div>
-              <h2 className="font-display text-2xl font-bold tracking-tight mb-8">Direct Inquiry</h2>
-              <form className="space-y-8" onSubmit={handleSubmit}>
+              <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight mb-6 sm:mb-8">Direct Inquiry</h2>
+              <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
                  <div>
                    <input 
                      type="text" 
                      required
                      aria-label="Your Name"
                      placeholder="YOUR NAME" 
-                     className="w-full bg-transparent border-b border-zinc-300 dark:border-zinc-700 py-4 font-mono text-sm tracking-widest focus:outline-none focus:border-black dark:focus:border-zinc-400 transition-colors"
+                     className="w-full bg-transparent border-b border-zinc-300 dark:border-zinc-700 py-3 sm:py-4 font-mono text-xs sm:text-sm tracking-widest focus:outline-none focus:border-black dark:focus:border-zinc-400 transition-colors"
                    />
                  </div>
                  <div>
@@ -63,7 +63,7 @@ export default function Contact() {
                      required
                      aria-label="Email Address"
                      placeholder="EMAIL ADDRESS" 
-                     className="w-full bg-transparent border-b border-zinc-300 dark:border-zinc-700 py-4 font-mono text-sm tracking-widest focus:outline-none focus:border-black dark:focus:border-zinc-400 transition-colors"
+                     className="w-full bg-transparent border-b border-zinc-300 dark:border-zinc-700 py-3 sm:py-4 font-mono text-xs sm:text-sm tracking-widest focus:outline-none focus:border-black dark:focus:border-zinc-400 transition-colors"
                    />
                  </div>
                  <div>
@@ -72,26 +72,26 @@ export default function Contact() {
                      required
                      aria-label="Project Details or Message"
                      rows={4}
-                     className="w-full bg-transparent border-b border-zinc-300 dark:border-zinc-700 py-4 font-mono text-sm tracking-widest focus:outline-none focus:border-black dark:focus:border-zinc-400 transition-colors resize-none"
+                     className="w-full bg-transparent border-b border-zinc-300 dark:border-zinc-700 py-3 sm:py-4 font-mono text-xs sm:text-sm tracking-widest focus:outline-none focus:border-black dark:focus:border-zinc-400 transition-colors resize-none"
                    />
                  </div>
                  <button 
                    type="submit"
-                   className="group relative overflow-hidden flex items-center justify-between w-full p-6 bg-black dark:bg-zinc-50 border-2 border-black dark:border-zinc-50 text-white dark:text-zinc-900 font-bold tracking-widest text-sm transition-all duration-200 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-[1px_1px_0px_#18181b] dark:active:shadow-[1px_1px_0px_#fafafa]"
+                   className="group relative overflow-hidden flex items-center justify-between w-full p-4 sm:p-6 bg-black dark:bg-zinc-50 border-2 border-black dark:border-zinc-50 text-white dark:text-zinc-900 font-bold tracking-widest text-xs sm:text-sm transition-all duration-200 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-[1px_1px_0px_#18181b] dark:active:shadow-[1px_1px_0px_#fafafa]"
                  >
                    <span className="relative z-10 flex items-center gap-2">
                      Send on Instagram
-                     <Instagram className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                     <Instagram className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                    </span>
                    <div className="absolute inset-0 bg-zinc-800 dark:bg-zinc-200 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>
-                   <span className="relative z-10 opacity-0 group-hover:opacity-100 transition-opacity"><Instagram className="w-5 h-5 translate-x-1 -translate-y-1" /></span>
+                   <span className="relative z-10 opacity-0 group-hover:opacity-100 transition-opacity"><Instagram className="w-4 h-4 sm:w-5 sm:h-5 translate-x-1 -translate-y-1" /></span>
                  </button>
               </form>
             </div>
 
-            <div className="flex flex-col justify-between mb-12 md:mb-0">
+            <div className="flex flex-col justify-between mb-8 md:mb-0">
               <div>
-                <h2 className="font-display text-2xl font-bold tracking-tight mb-8">Social Presence</h2>
+                <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight mb-6 sm:mb-8">Social Presence</h2>
                 <div 
                   className="grid grid-cols-1 sm:grid-cols-2 gap-2"
                   onMouseLeave={() => setHoveredIndex(null)}
@@ -113,7 +113,7 @@ export default function Contact() {
                         aria-label={`Visit ${social.label}`}
                         target={social.href.startsWith('http') ? "_blank" : undefined}
                         rel={social.href.startsWith('http') ? "noopener noreferrer" : undefined}
-                        className={`flex items-center gap-6 group relative p-4 rounded-xl transition-opacity duration-300 ${hoveredIndex !== null && hoveredIndex !== i ? 'opacity-30' : 'opacity-100'}`}
+                        className={`flex items-center gap-4 sm:gap-6 group relative p-3 sm:p-4 rounded-xl transition-opacity duration-300 ${hoveredIndex !== null && hoveredIndex !== i ? 'opacity-30' : 'opacity-100'}`}
                         onMouseEnter={() => setHoveredIndex(i)}
                       >
                         <AnimatePresence>
@@ -128,10 +128,10 @@ export default function Contact() {
                             />
                           )}
                         </AnimatePresence>
-                        <div className="relative z-10 p-4 bg-zinc-100 dark:bg-zinc-800 rounded-full group-hover:bg-black group-hover:text-white transition-colors">
-                          <social.icon className="w-5 h-5" />
+                        <div className="relative z-10 p-3 sm:p-4 bg-zinc-100 dark:bg-zinc-800 rounded-full group-hover:bg-black group-hover:text-white transition-colors shrink-0">
+                          <social.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
-                        <span className="relative z-10 font-mono text-xs tracking-widest truncate w-[140px] sm:w-[auto]">
+                        <span className="relative z-10 font-mono text-[11px] sm:text-xs tracking-widest truncate max-w-[200px] sm:max-w-none">
                           {social.label}
                         </span>
                       </motion.a>
@@ -139,8 +139,8 @@ export default function Contact() {
                 </div>
               </div>
               
-              <div className="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800">
-                 <p className="font-light text-zinc-600 dark:text-zinc-400 max-w-sm">
+              <div className="mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-zinc-200 dark:border-zinc-800">
+                 <p className="font-light text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-sm">
                    Currently based in Kochi, Kerala, India. Open for remote opportunities and innovative collaborations worldwide.
                  </p>
               </div>
@@ -148,7 +148,7 @@ export default function Contact() {
           </div>
 
           <div className="col-span-4 md:col-span-4 lg:col-span-6 order-1 md:order-2 flex justify-end">
-            <div className="relative w-full h-[300px] md:h-[600px] lg:h-full min-h-[400px] rounded-2xl overflow-hidden mb-8 md:mb-0 mt-2">
+            <div className="relative w-full h-[220px] sm:h-[300px] md:h-[500px] lg:h-full min-h-[220px] sm:min-h-[350px] rounded-2xl overflow-hidden mb-6 sm:mb-8 md:mb-0 mt-2">
                <Image src="/monstera.jpeg" alt="Monstera" fill className="object-cover" />
             </div>
           </div>

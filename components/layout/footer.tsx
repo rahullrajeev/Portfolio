@@ -1,11 +1,18 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { TransitionLink as Link } from "@/components/ui/transition-link";
 import { ArrowUpRight } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === "/seo-demo") {
+    return null;
+  }
+
   return (
     <footer className="relative bg-zinc-950 text-white overflow-hidden py-24 px-6 md:px-12 mt-24">
       <div className="max-w-7xl mx-auto flex flex-col gap-24">

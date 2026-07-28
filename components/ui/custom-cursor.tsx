@@ -61,15 +61,14 @@ export function CustomCursor() {
       const target = e.target as HTMLElement;
       if (!target) return;
       
-      setIsPointer(
-        (target.tagName && target.tagName.toLowerCase() === "a") ||
-        (target.tagName && target.tagName.toLowerCase() === "button") ||
-        (target.closest && target.closest("a") !== null) ||
-        (target.closest && target.closest("button") !== null) ||
-        (target.closest && target.closest("[role='button']") !== null) ||
-        (target.classList && target.classList.contains("cursor-pointer")) ||
-        (target.closest && target.closest(".cursor-pointer") !== null)
+      const isInteractive = Boolean(
+        target.matches && (
+          target.matches("a, button, [role='button'], [role='link'], .cursor-pointer, input, select, textarea") ||
+          (target.closest && target.closest("a, button, [role='button'], [role='link'], .cursor-pointer") !== null)
+        )
       );
+      
+      setIsPointer(isInteractive);
     };
 
     const handleMouseLeave = () => setIsVisible(false);

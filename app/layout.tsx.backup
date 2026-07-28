@@ -3,7 +3,6 @@ import { Playfair_Display, Space_Mono } from "next/font/google";
 import './globals.css';
 import { Navigation } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
-import { MainContainer } from "@/components/layout/main-container";
 import { CustomCursor } from "@/components/ui/custom-cursor";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { TransitionProvider } from "@/components/layout/transition-provider";
@@ -85,7 +84,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             }}
           />
           <TransitionProvider>
-            <MainContainer>{children}</MainContainer>
+            <main className="min-h-screen pt-24">{children}</main>
           </TransitionProvider>
           <Footer />
         </SmoothScroll>
