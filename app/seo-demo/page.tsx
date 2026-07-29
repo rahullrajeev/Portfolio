@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { PageTransition } from "@/components/layout/page-transition";
 import { 
   Search, 
   CheckCircle2, 
@@ -29,7 +30,8 @@ export default function SEODemoPage() {
   const [searchQuery, setSearchQuery] = useState("best study abroad consultants in kochi");
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans p-2 sm:p-4 md:p-6 select-none">
+    <PageTransition>
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans p-2 sm:p-4 md:p-6 select-none">
       {/* Top Demo Header Bar */}
       <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 mb-4 sm:mb-6 border-b border-zinc-800/80">
         <div className="flex items-center gap-2.5">
@@ -525,5 +527,6 @@ export default function SEODemoPage() {
         )}
       </div>
     </div>
+    </PageTransition>
   );
 }

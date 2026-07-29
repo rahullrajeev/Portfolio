@@ -2,48 +2,89 @@
 
 import Link, { LinkProps } from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import React, { useTransition } from "react";
+import React from "react";
 
-interface TransitionLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>, LinkProps {
+interface TransitionLinkProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>,
+    LinkProps {
   children: React.ReactNode;
-  href: string;
+  className?: string;
 }
 
-export function TransitionLink({ 
-  href, 
-  children, 
-  className, 
-  onClick, 
-  ...props 
+export function TransitionLink({
+  href,
+  children,
+  className,
+  onClick,
+  onMouseEnter,
+  ...props
 }: TransitionLinkProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
+
+  const targetUrl = href.toString();
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (onMouseEnter) onMouseEnter(e);
+    if (targetUrl && targetUrl.startsWith("/") && targetUrl !== pathname) {
+      router.prefetch(targetUrl);
+    }
+  };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Standard link behavior for modifier keys or external links
+    if (
+      e.metaKey ||
+      e.ctrlKey ||
+      e.shiftKey ||
+      e.altKey ||
+      props.target === "_blank" ||
+      !targetUrl.startsWith("/")
+    ) {
+      if (onClick) onClick(e);
+      return;
+    }
+
     e.preventDefault();
     if (onClick) onClick(e);
-    
-    const targetUrl = href.toString();
+
     if (pathname === targetUrl) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    // Dispatch the closing transition event
-    window.dispatchEvent(new Event("transition-start"));
-    
-    // Smooth delay before push, reducing from 800ms to 400ms fixes the perceived lag 
-    // while giving the shutters enough time to cleanly transition in.
+    // Prevent double clicks if a transition is already running
+    if (document.body.dataset.transitioning === "true") {
+      return;
+    }
+
+    // Set transition state
+    document.body.dataset.transitioning = "true";
+
+    // Prefetch immediately on click
+    router.prefetch(targetUrl);
+
+    // Trigger transition event to start shutter sweep
+    window.dispatchEvent(
+      new CustomEvent("page-transition-start", {
+        detail: { targetUrl },
+      })
+    );
+
+    // Push route with a tiny delay to ensure animation frame starts cleanly
     setTimeout(() => {
-      startTransition(() => {
-        router.push(targetUrl);
-      });
-    }, 250); 
+      router.push(targetUrl, { scroll: false });
+    }, 50);
   };
 
   return (
-    <Link href={href} className={className} onClick={handleClick} {...props}>
+    <Link
+      href={href}
+      className={className}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      {...props}
+    >
       {children}
     </Link>
   );

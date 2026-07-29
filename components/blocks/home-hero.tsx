@@ -1,14 +1,39 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import { TransitionLink as Link } from "@/components/ui/transition-link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Mouse } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export function HomeHero() {
   const [hoveredText, setHoveredText] = useState<"dev" | "seo" | "web" | null>(null);
   const [hoveredBtn, setHoveredBtn] = useState<"dev" | "seo" | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 22,
+    restDelta: 0.001,
+  });
+
+  // Parallax scroll effects when scrolling towards (down) and backwards (up)
+  const imageY = useTransform(smoothScroll, [0, 1], [0, 80]);
+  const imageScale = useTransform(smoothScroll, [0, 1], [1, 1.08]);
+  const imageOpacity = useTransform(smoothScroll, [0, 0.85, 1], [1, 0.85, 0.2]);
+
+  const seoX = useTransform(smoothScroll, [0, 1], [0, -35]);
+  const devX = useTransform(smoothScroll, [0, 1], [0, 35]);
+  const webX = useTransform(smoothScroll, [0, 1], [0, -20]);
+
+  const nameY = useTransform(smoothScroll, [0, 1], [0, -20]);
+  const locationY = useTransform(smoothScroll, [0, 1], [0, 25]);
+  const scrollCueOpacity = useTransform(smoothScroll, [0, 0.3], [1, 0]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -28,7 +53,10 @@ export function HomeHero() {
   };
 
   return (
-    <section className="min-h-[calc(100svh-5rem)] sm:min-h-[calc(100svh-8rem)] pt-1 sm:pt-4 md:pt-8 lg:pt-2 pb-6 sm:pb-8 md:pb-12 lg:pb-4 px-3 sm:px-6 md:px-12 flex flex-col justify-center items-center relative overflow-hidden max-w-full">
+    <section
+      ref={sectionRef}
+      className="min-h-[calc(100svh-5rem)] sm:min-h-[calc(100svh-8rem)] pt-1 sm:pt-4 md:pt-8 lg:pt-2 pb-6 sm:pb-8 md:pb-12 lg:pb-4 px-3 sm:px-6 md:px-12 flex flex-col justify-center items-center relative overflow-hidden max-w-full"
+    >
       <motion.div
         variants={container}
         initial="hidden"
@@ -38,11 +66,17 @@ export function HomeHero() {
         <div className="w-full flex justify-center mb-28 sm:mb-12 md:mb-16 lg:mb-24 relative z-30 pt-1 sm:pt-2 md:pt-2 lg:pt-2">
           <motion.div
             variants={item}
+            style={{ y: nameY }}
             className="flex items-center gap-4 md:gap-6 cursor-default"
           >
-            <h1 className="font-mono uppercase text-xs sm:text-[13px] md:text-[16px] leading-tight font-medium sm:font-normal tracking-[0.22em] sm:tracking-[0.2em] text-zinc-900 dark:text-zinc-50 text-center relative -translate-y-2 sm:-translate-y-3">
+            <motion.h1 
+              initial={{ opacity: 0, letterSpacing: '0em', filter: 'blur(8px)' }}
+              animate={{ opacity: 1, letterSpacing: '0.22em', filter: 'blur(0px)' }}
+              transition={{ duration: 2.4, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              className="font-mono uppercase text-xs sm:text-[13px] md:text-[16px] leading-tight font-medium sm:font-normal cursor-default text-zinc-900 dark:text-zinc-50 text-center relative -translate-y-2 sm:-translate-y-3"
+            >
               Rahul Rajeev
-            </h1>
+            </motion.h1>
           </motion.div>
         </div>
 
@@ -52,6 +86,7 @@ export function HomeHero() {
             <div className="relative flex flex-col items-start w-full -space-y-2 sm:-space-y-3 md:-space-y-6 lg:-space-y-8 cursor-default max-w-full">
               <motion.div
                 variants={item}
+                style={{ y: imageY, scale: imageScale, opacity: imageOpacity }}
                 className="absolute top-[52%] sm:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none w-[140%] sm:w-[130%] md:w-[150%] flex justify-center h-[320px] sm:h-[360px] md:h-[480px] lg:h-[580px]"
               >
                 <Image
@@ -73,7 +108,7 @@ export function HomeHero() {
                     ? "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
                     : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:currentColor]"
                 }`}
-                style={{ WebkitTextStroke: "1.5px currentColor" }}
+                style={{ WebkitTextStroke: "1.5px currentColor", x: seoX }}
                 onMouseEnter={() => setHoveredText("seo")}
                 onMouseLeave={() => setHoveredText(null)}
               >
@@ -89,7 +124,7 @@ export function HomeHero() {
                     ? "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
                     : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:currentColor]"
                 }`}
-                style={{ WebkitTextStroke: "1.5px currentColor" }}
+                style={{ WebkitTextStroke: "1.5px currentColor", x: devX }}
                 onMouseEnter={() => setHoveredText("dev")}
                 onMouseLeave={() => setHoveredText(null)}
               >
@@ -105,7 +140,7 @@ export function HomeHero() {
                     ? "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:transparent]"
                     : "z-[1] scale-100 translate-x-0 [-webkit-text-fill-color:currentColor]"
                 }`}
-                style={{ WebkitTextStroke: "1.5px currentColor" }}
+                style={{ WebkitTextStroke: "1.5px currentColor", x: webX }}
                 onMouseEnter={() => setHoveredText("web")}
                 onMouseLeave={() => setHoveredText(null)}
               >
@@ -115,6 +150,7 @@ export function HomeHero() {
 
             <motion.div
               variants={item}
+              style={{ y: locationY }}
               className="mt-2 md:mt-6 text-xs sm:text-sm font-light tracking-tight text-zinc-600 dark:text-zinc-400 self-start relative z-[10]"
             >
               based in Kochi, India.
@@ -188,6 +224,30 @@ export function HomeHero() {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* Mouse Scroll Indicator Cue */}
+      <motion.div
+        style={{ opacity: scrollCueOpacity }}
+        className="flex absolute bottom-2 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
+      >
+        <div className="w-5 h-8 rounded-full border-2 border-zinc-400/60 dark:border-zinc-600/60 flex justify-center p-1">
+          <motion.div
+            animate={{
+              y: [0, 8, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="w-1 h-2 rounded-full bg-zinc-700 dark:bg-zinc-200"
+          />
+        </div>
+        <span className="font-mono text-[10px] uppercase tracking-widest opacity-70">
+          Scroll
+        </span>
+      </motion.div>
     </section>
   );
 }
+
