@@ -4,16 +4,98 @@ import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState, useRef, useCallback } from "react";
 
-type Stage = "idle" | "covering" | "uncovering";
+type Stage = "intro" | "idle" | "covering" | "uncovering";
+
+const playPremiumIntroSound = () => {
+  try {
+    const audio = new Audio('/piano.mpeg');
+    audio.volume = 0.5; // Adjust volume if needed
+    
+    // Play the audio with a slight delay if needed, or immediately
+    setTimeout(() => {
+        audio.play().catch(e => console.log("Audio autoplay blocked", e));
+    }, 2500); // 2.5s delay to play right after compression to rr.
+
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+    
+    const t0 = ctx.currentTime;
+    
+    // Keystroke clicks (mechanical keyboard style)
+    const text = "rahul rajeev";
+    const typeStart = t0 + 0.5;
+    const charTime = 1.0 / text.length;
+    
+    for (let i = 0; i < text.length; i++) {
+        if (text[i] === ' ') continue;
+        const time = typeStart + i * charTime;
+        
+        // Use a square wave with bandpass for a "clicky" transient
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(3000 + Math.random() * 500, time);
+        osc.frequency.exponentialRampToValueAtTime(100, time + 0.015);
+        
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(2000, time);
+        
+        gain.gain.setValueAtTime(0, time);
+        gain.gain.linearRampToValueAtTime(0.04, time + 0.001);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.015);
+        
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(time);
+        osc.stop(time + 0.015);
+    }
+
+  } catch (e) {
+    console.log("Audio autoplay blocked or not supported");
+  }
+};
 
 export function TransitionProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [stage, setStage] = useState<Stage>("idle");
+  const [stage, setStage] = useState<Stage>("intro");
+  const [introStep, setIntroStep] = useState(0);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const prevPathname = useRef(pathname);
   
   const isNavigating = useRef(false);
   const routeReady = useRef(false);
   const coverFinished = useRef(false);
+
+  // Handle initial cinematic intro
+  useEffect(() => {
+    if (stage === "intro") {
+      document.body.dataset.transitioning = "true";
+      playPremiumIntroSound();
+      
+      const t1 = setTimeout(() => setIntroStep(1), 500); // Start typing
+      const t2 = setTimeout(() => setIntroStep(2), 2000); // Merge
+      const t3 = setTimeout(() => setIntroStep(3), 2500); // Dot appears
+      
+      const t4 = setTimeout(() => {
+        setStage("uncovering");
+      }, 3500); // Fade to home
+      
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+        clearTimeout(t3);
+        clearTimeout(t4);
+      }
+    }
+  }, [stage]);
 
   const checkUncover = useCallback(() => {
     if (isNavigating.current && routeReady.current && coverFinished.current) {
@@ -35,7 +117,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       setTimeout(() => {
         coverFinished.current = true;
         checkUncover();
-      }, 400);
+      }, 550);
 
       // Safety fallback: force uncover if route loading takes too long
       setTimeout(() => {
@@ -67,8 +149,9 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     if (stage === "uncovering") {
       const timer = setTimeout(() => {
         setStage("idle");
+        setIsFirstLoad(false);
         document.body.dataset.transitioning = "false";
-      }, 460);
+      }, 650);
       return () => clearTimeout(timer);
     }
   }, [stage]);
@@ -82,13 +165,70 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         {children}
       </div>
 
-      {/* Smooth Shutter Sweep Overlay */}
+      {/* Cinematic Premium Intro Elements (Only on First Load) */}
+      <motion.div 
+         className="fixed inset-0 w-full h-full bg-zinc-950 text-zinc-50 z-[99999] pointer-events-none flex items-center justify-center overflow-hidden transform-gpu"
+         style={{ display: isFirstLoad ? "flex" : "none" }}
+         animate={{ opacity: stage === "uncovering" ? 0 : 1 }}
+         transition={{ duration: 0.8, ease: "easeInOut" }}
+      >
+        <div className="flex items-center text-3xl sm:text-4xl text-zinc-100 font-bold tracking-tighter lowercase">
+          {"rahul rajeev".split("").map((char, i) => {
+            const isR = char === 'r';
+            return (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, width: "auto" }}
+                animate={{
+                  opacity: introStep >= 1 ? (introStep >= 2 && !isR ? 0 : 1) : 0,
+                  width: introStep >= 2 && !isR ? 0 : "auto",
+                  marginRight: introStep >= 2 && char === ' ' ? 0 : (char === ' ' ? "0.4em" : 0),
+                }}
+                transition={{
+                  opacity: {
+                    delay: introStep === 1 ? i * (1.0 / 12) : 0,
+                    duration: introStep >= 2 ? 0.3 : 0.01,
+                  },
+                  width: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                  marginRight: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                }}
+                className={`inline-block overflow-hidden whitespace-nowrap ${introStep >= 2 && isR ? "font-bold tracking-tighter" : "font-medium tracking-tight"}`}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            );
+          })}
+          <motion.span
+            initial={{ opacity: 0, x: -10, width: 0 }}
+            animate={{ 
+              opacity: introStep >= 3 ? 1 : 0, 
+              x: introStep >= 3 ? 0 : -10,
+              width: introStep >= 3 ? "auto" : 0
+            }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="inline-block font-bold tracking-tighter"
+          >
+            .
+          </motion.span>
+          <motion.span
+            animate={{ opacity: introStep >= 2 ? 0 : [1, 0, 1] }}
+            transition={{ repeat: introStep >= 2 ? 0 : Infinity, duration: 0.8 }}
+            className="inline-block w-[2px] sm:w-[3px] h-[0.9em] bg-zinc-100 ml-[2px] translate-y-[0.1em]"
+          />
+        </div>
+      </motion.div>
+
+      {/* Page Transition Shutter Sweep Overlay (Dark) */}
       <motion.div
-        className="fixed inset-0 w-full h-full bg-zinc-950 text-zinc-50 z-[99999] pointer-events-none flex flex-col items-center justify-center overflow-hidden transform-gpu"
-        style={{ transformOrigin }}
+        className="fixed inset-0 w-full h-full bg-zinc-950 text-zinc-50 z-[99998] pointer-events-none flex flex-col items-center justify-center overflow-hidden transform-gpu"
+        style={{ 
+          transformOrigin,
+          display: isFirstLoad ? "none" : "flex"
+        }}
+        initial={{ scaleY: 1 }}
         animate={{ scaleY }}
         transition={{
-          duration: stage === "covering" ? 0.32 : 0.42,
+          duration: stage === "covering" ? 0.45 : 0.55,
           ease: stage === "covering" ? [0.76, 0, 0.24, 1] : [0.22, 1, 0.36, 1],
         }}
       >
@@ -101,7 +241,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
           }}
           transition={{ duration: 0.2 }}
         >
-          <span className="font-display font-bold text-3xl sm:text-4xl tracking-tighter text-zinc-100 lowercase">
+          <span className="font-bold text-3xl sm:text-4xl tracking-tighter text-zinc-100 lowercase">
             rr.
           </span>
           <div className="w-12 h-0.5 bg-zinc-800 rounded-full overflow-hidden relative">
