@@ -4,25 +4,72 @@ import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState, useRef, useCallback } from "react";
 
-type Stage = "intro" | "idle" | "covering" | "uncovering";
+type Stage = "pre-intro" | "intro" | "idle" | "covering" | "uncovering";
 
-const playPremiumIntroSound = () => {
+const decodeAudio = (ctx: AudioContext, arrayBuffer: ArrayBuffer): Promise<AudioBuffer> => {
+  return new Promise((resolve, reject) => {
+    try {
+      const res = ctx.decodeAudioData(
+        arrayBuffer,
+        (buffer) => resolve(buffer),
+        (err) => reject(err)
+      );
+      if (res && typeof (res as any).then === 'function') {
+        (res as Promise<AudioBuffer>).then(resolve).catch(reject);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const playPremiumIntroSound = (audioCtxRef: React.MutableRefObject<AudioContext | null>) => {
   try {
-    const audio = new Audio('/piano.mpeg');
-    audio.volume = 0.5; // Adjust volume if needed
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) return;
     
-    // Play the audio with a slight delay if needed, or immediately
-    setTimeout(() => {
-        audio.play().catch(e => console.log("Audio autoplay blocked", e));
-    }, 2500); // 2.5s delay to play right after compression to rr.
+    if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+      try { audioCtxRef.current.close(); } catch {}
+    }
 
-    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
+    const ctx = new AudioContextClass();
+    audioCtxRef.current = ctx;
     
     if (ctx.state === 'suspended') {
-      ctx.resume();
+      ctx.resume().catch(() => {});
     }
+
+    // iOS/Safari priming: play 0s silent buffer synchronously inside user gesture
+    try {
+      const silentBuffer = ctx.createBuffer(1, 1, 22050);
+      const silentSource = ctx.createBufferSource();
+      silentSource.buffer = silentBuffer;
+      silentSource.connect(ctx.destination);
+      silentSource.start(0);
+    } catch {}
+    
+    // Fetch and schedule the piano sound using Web Audio API for reliable playback
+    fetch('/piano.mpeg')
+      .then(response => response.arrayBuffer())
+      .then(arrayBuffer => {
+        if (audioCtxRef.current !== ctx || ctx.state === 'closed') return;
+        return decodeAudio(ctx, arrayBuffer);
+      })
+      .then(audioBuffer => {
+        if (!audioBuffer || audioCtxRef.current !== ctx || ctx.state === 'closed') return;
+        const source = ctx.createBufferSource();
+        source.buffer = audioBuffer;
+        
+        const gainNode = ctx.createGain();
+        gainNode.gain.value = 0.15; // Decreased volume
+        
+        source.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        // 2.5s delay to play right after compression to rr.
+        source.start(ctx.currentTime + 2.5);
+      })
+      .catch(e => console.log("Failed to load or play piano audio", e));
     
     const t0 = ctx.currentTime;
     
@@ -48,7 +95,7 @@ const playPremiumIntroSound = () => {
         filter.frequency.setValueAtTime(2000, time);
         
         gain.gain.setValueAtTime(0, time);
-        gain.gain.linearRampToValueAtTime(0.04, time + 0.001);
+        gain.gain.linearRampToValueAtTime(0.012, time + 0.001);
         gain.gain.exponentialRampToValueAtTime(0.001, time + 0.015);
         
         osc.connect(filter);
@@ -65,20 +112,41 @@ const playPremiumIntroSound = () => {
 
 export function TransitionProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [stage, setStage] = useState<Stage>("intro");
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  const stopIntroAudio = useCallback(() => {
+    if (audioCtxRef.current) {
+      try {
+        if (audioCtxRef.current.state !== 'closed') {
+          audioCtxRef.current.close();
+        }
+      } catch (e) {
+        // Ignore
+      }
+      audioCtxRef.current = null;
+    }
+  }, []);
+
+  const [stage, setStage] = useState<Stage>(() => (pathname === "/" ? "pre-intro" : "idle"));
   const [introStep, setIntroStep] = useState(0);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(() => pathname === "/");
   const prevPathname = useRef(pathname);
   
   const isNavigating = useRef(false);
   const routeReady = useRef(false);
   const coverFinished = useRef(false);
 
+  // Clean up audio on unmount
+  useEffect(() => {
+    return () => {
+      stopIntroAudio();
+    };
+  }, [stopIntroAudio]);
+
   // Handle initial cinematic intro
   useEffect(() => {
     if (stage === "intro") {
       document.body.dataset.transitioning = "true";
-      playPremiumIntroSound();
       
       const t1 = setTimeout(() => setIntroStep(1), 500); // Start typing
       const t2 = setTimeout(() => setIntroStep(2), 2000); // Merge
@@ -107,6 +175,9 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const handleStart = () => {
+      // Always stop intro audio if navigating or page transition starts
+      stopIntroAudio();
+
       if (isNavigating.current) return;
       isNavigating.current = true;
       routeReady.current = false;
@@ -133,20 +204,22 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     return () => {
       window.removeEventListener("page-transition-start", handleStart);
     };
-  }, [checkUncover]);
+  }, [checkUncover, stopIntroAudio]);
 
   // When route changes (pathname updates)
   useEffect(() => {
+    stopIntroAudio();
     if (prevPathname.current !== pathname) {
       prevPathname.current = pathname;
       routeReady.current = true;
       checkUncover();
     }
-  }, [pathname, checkUncover]);
+  }, [pathname, checkUncover, stopIntroAudio]);
 
   // Handle stage reset after uncovering animation completes
   useEffect(() => {
     if (stage === "uncovering") {
+      stopIntroAudio();
       const timer = setTimeout(() => {
         setStage("idle");
         setIsFirstLoad(false);
@@ -154,7 +227,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       }, 650);
       return () => clearTimeout(timer);
     }
-  }, [stage]);
+  }, [stage, stopIntroAudio]);
 
   const transformOrigin = stage === "uncovering" ? "bottom" : "top";
   const scaleY = stage === "idle" ? 0 : stage === "uncovering" ? 0 : 1;
@@ -165,15 +238,34 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         {children}
       </div>
 
-      {/* Cinematic Premium Intro Elements (Only on First Load) */}
+      {/* Cinematic Premium Intro Elements (Only on First Load on Homepage) */}
       <motion.div 
-         className="fixed inset-0 w-full h-full bg-zinc-950 text-zinc-50 z-[99999] pointer-events-none flex items-center justify-center overflow-hidden transform-gpu"
+         className={`fixed inset-0 w-full h-full bg-zinc-950 text-zinc-50 z-[99999] flex flex-col items-center justify-center overflow-hidden transform-gpu ${stage === "pre-intro" ? "pointer-events-auto cursor-pointer" : "pointer-events-none"}`}
          style={{ display: isFirstLoad ? "flex" : "none" }}
          animate={{ opacity: stage === "uncovering" ? 0 : 1 }}
          transition={{ duration: 0.8, ease: "easeInOut" }}
+         onClick={() => {
+           if (stage === "pre-intro") {
+             setStage("intro");
+             playPremiumIntroSound(audioCtxRef);
+           }
+         }}
       >
-        <div className="flex items-center text-3xl sm:text-4xl text-zinc-100 font-bold tracking-tighter lowercase">
-          {"rahul rajeev".split("").map((char, i) => {
+        {stage === "pre-intro" ? (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-col items-center gap-6"
+          >
+            <span className="text-3xl font-bold tracking-tighter lowercase text-zinc-100">rr.</span>
+            <button className="px-8 py-3 bg-zinc-100 text-zinc-950 rounded-full text-sm font-medium hover:bg-white transition-colors duration-300">
+              enter.
+            </button>
+          </motion.div>
+        ) : (
+          <div className="flex items-center text-3xl sm:text-4xl text-zinc-100 font-bold tracking-tighter lowercase">
+            {"rahul rajeev".split("").map((char, i) => {
             const isR = char === 'r';
             return (
               <motion.span
@@ -216,6 +308,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
             className="inline-block w-[2px] sm:w-[3px] h-[0.9em] bg-zinc-100 ml-[2px] translate-y-[0.1em]"
           />
         </div>
+        )}
       </motion.div>
 
       {/* Page Transition Shutter Sweep Overlay (Dark) */}

@@ -107,17 +107,19 @@ export default function Home() {
         
         <Grid className="gap-y-px gap-x-px bg-zinc-200 dark:bg-zinc-800">
           {[
-            { title: "AI Integration", desc: "Orchestrating Gemini & other LLMs to synthesize intelligence within UI elements for seamless user workflows.", num: "01" },
-            { title: "Frontend Engineering", desc: "Crafting fluid, high-performance interfaces with React, Next.js, and complex animation libraries.", num: "02" },
-            { title: "Technical SEO", desc: "Architecting sites for maximal crawlability, indexing, and dominance in search via advanced technical strategies.", num: "03" },
-            { title: "Web Design & Development", desc: "Designing and developing responsive, high-converting websites and landing pages tailored for modern web products.", num: "04" },
+            { title: "SEO", desc: "Technical SEO, AEO & GEO optimization, schema architecture, crawlability, and search dominance via data-driven organic strategies.", num: "01", href: "/seo" },
+            { title: "Web Design & Development", desc: "Designing and developing responsive, high-converting websites and landing pages tailored for modern web products.", num: "02", href: "/projects" },
+            { title: "Frontend Engineering", desc: "Crafting fluid, high-performance interfaces with React, Next.js, and complex animation libraries.", num: "03", href: "/resume" },
+            { title: "AI Integration", desc: "Orchestrating Gemini & other LLMs to synthesize intelligence within UI elements for seamless user workflows.", num: "04", href: "/seo-demo" },
           ].map((exp) => (
-             <div key={exp.num} className="col-span-4 md:col-span-4 lg:col-span-6 bg-zinc-50 dark:bg-zinc-950 hover:bg-zinc-900 dark:hover:bg-zinc-50 lg:hover:scale-105 lg:hover:-translate-y-4 lg:hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:lg:hover:shadow-[0_20px_50px_rgba(255,255,255,0.05)] hover:z-50 z-0 p-6 sm:p-8 md:p-12 group transition-all duration-300 ease-out relative cursor-pointer outline outline-1 outline-transparent hover:outline-zinc-200 dark:hover:outline-zinc-800">
+            <Link key={exp.num} href={exp.href} className="col-span-4 md:col-span-4 lg:col-span-6 block h-full">
+              <div className="h-full bg-zinc-50 dark:bg-zinc-950 hover:bg-zinc-900 dark:hover:bg-zinc-50 lg:hover:scale-105 lg:hover:-translate-y-4 lg:hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:lg:hover:shadow-[0_20px_50px_rgba(255,255,255,0.05)] hover:z-50 z-0 p-6 sm:p-8 md:p-12 group transition-all duration-300 ease-out relative cursor-pointer outline outline-1 outline-transparent hover:outline-zinc-200 dark:hover:outline-zinc-800">
                 <div className="text-zinc-500 dark:text-zinc-500 font-mono text-base sm:text-lg mb-4 sm:mb-6 group-hover:text-zinc-400 dark:group-hover:text-zinc-600 transition-colors duration-500">{exp.num}</div>
                 <h3 className="font-display text-base sm:text-lg md:text-xl font-bold tracking-tight mb-2 sm:mb-3 text-zinc-900 dark:text-zinc-50 group-hover:text-zinc-50 dark:group-hover:text-zinc-900 transition-colors duration-500">{exp.title}</h3>
                 <p className="text-xs sm:text-sm md:text-base text-zinc-700 dark:text-zinc-300 font-sans font-light leading-relaxed group-hover:text-zinc-200 dark:group-hover:text-zinc-700 transition-colors duration-500">{exp.desc}</p>
                 <div className="absolute bottom-0 left-0 w-0 h-1 bg-zinc-400 dark:bg-zinc-600 group-hover:w-full transition-all duration-700 ease-out"></div>
-             </div>
+              </div>
+            </Link>
           ))}
         </Grid>
       </section>

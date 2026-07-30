@@ -7,7 +7,8 @@ import { motion } from "motion/react";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const currentTheme = resolvedTheme || theme;
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
@@ -22,9 +23,11 @@ export function ThemeToggle() {
     );
   }
 
+  const isDark = currentTheme === "dark";
+
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
       className="p-2 w-10 h-10 rounded-full flex items-center justify-center relative cursor-none hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50 transition-colors pointer-events-auto"
       aria-label="Toggle Dark Mode"
     >
@@ -32,9 +35,9 @@ export function ThemeToggle() {
         <motion.div
            initial={false}
            animate={{
-             scale: theme === "dark" ? 0 : 1,
-             opacity: theme === "dark" ? 0 : 1,
-             rotate: theme === "dark" ? 90 : 0,
+             scale: isDark ? 0 : 1,
+             opacity: isDark ? 0 : 1,
+             rotate: isDark ? 90 : 0,
            }}
            transition={{ duration: 0.2, ease: "easeInOut" }}
            className="absolute"
@@ -45,9 +48,9 @@ export function ThemeToggle() {
         <motion.div
            initial={false}
            animate={{
-             scale: theme === "dark" ? 1 : 0,
-             opacity: theme === "dark" ? 1 : 0,
-             rotate: theme === "dark" ? 0 : -90,
+             scale: isDark ? 1 : 0,
+             opacity: isDark ? 1 : 0,
+             rotate: isDark ? 0 : -90,
            }}
            transition={{ duration: 0.2, ease: "easeInOut" }}
            className="absolute"
