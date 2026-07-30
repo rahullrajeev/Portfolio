@@ -65,42 +65,57 @@ export function Navigation() {
       >
         {/* Desktop Nav */}
         <ul 
-          className="hidden md:flex items-center lowercase text-sm font-medium tracking-wide pointer-events-auto p-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10"
+          className="hidden md:flex items-center gap-1 lowercase text-xs sm:text-sm font-medium tracking-wide pointer-events-auto p-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl shadow-black/10"
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          {links.map((link, idx) => (
-            <li 
-              key={link.href}
-              className="relative"
-              onMouseEnter={() => setHoveredIndex(idx)}
-            >
-              <Magnetic strength={10}>
-                <Link href={link.href} className="relative z-10 block px-5 py-2">
-                  {link.label}
-                  {pathname === link.href && (
-                    <motion.div
-                      className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full"
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.2 }}
-                    />
-                  )}
-                </Link>
-              </Magnetic>
-              <AnimatePresence>
-                {hoveredIndex === idx && (
+          {links.map((link, idx) => {
+            const isActive = pathname === link.href;
+            return (
+              <li 
+                key={link.href}
+                className="relative"
+                onMouseEnter={() => setHoveredIndex(idx)}
+              >
+                <Magnetic strength={10}>
+                  <Link href={link.href} className={`relative z-10 block px-4.5 py-2 transition-opacity duration-200 ${isActive ? "opacity-100 font-semibold" : "opacity-75 hover:opacity-100"}`}>
+                    <span className="flex items-center gap-1.5">
+                      {link.label}
+                      {isActive && (
+                        <motion.span
+                          layoutId="activeDot"
+                          className="w-1.5 h-1.5 bg-white rounded-full inline-block shadow-sm"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </span>
+                  </Link>
+                </Magnetic>
+
+                {/* Active Indicator Background */}
+                {isActive && (
                   <motion.div
-                    layoutId="navHover"
-                    className="absolute inset-0 bg-white/20 rounded-full pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    layoutId="navActive"
+                    className="absolute inset-0 bg-white/25 rounded-full pointer-events-none"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}
-              </AnimatePresence>
-            </li>
-          ))}
+
+                {/* Hover Background */}
+                <AnimatePresence>
+                  {hoveredIndex === idx && !isActive && (
+                    <motion.div
+                      layoutId="navHover"
+                      className="absolute inset-0 bg-white/15 rounded-full pointer-events-none"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </AnimatePresence>
+              </li>
+            );
+          })}
         </ul>
 
         {/* Mobile Toggle & Theme */}

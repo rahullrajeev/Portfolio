@@ -188,7 +188,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       setTimeout(() => {
         coverFinished.current = true;
         checkUncover();
-      }, 550);
+      }, 700);
 
       // Safety fallback: force uncover if route loading takes too long
       setTimeout(() => {
@@ -197,7 +197,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
           coverFinished.current = true;
           checkUncover();
         }
-      }, 2000);
+      }, 2200);
     };
 
     window.addEventListener("page-transition-start", handleStart);
@@ -224,7 +224,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         setStage("idle");
         setIsFirstLoad(false);
         document.body.dataset.transitioning = "false";
-      }, 650);
+      }, 800);
       return () => clearTimeout(timer);
     }
   }, [stage, stopIntroAudio]);
@@ -321,18 +321,18 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         initial={{ scaleY: 1 }}
         animate={{ scaleY }}
         transition={{
-          duration: stage === "covering" ? 0.45 : 0.55,
-          ease: stage === "covering" ? [0.76, 0, 0.24, 1] : [0.22, 1, 0.36, 1],
+          duration: stage === "covering" ? 0.65 : 0.75,
+          ease: stage === "covering" ? [0.65, 0, 0.35, 1] : [0.33, 1, 0.68, 1],
         }}
       >
         <motion.div
           className="flex flex-col items-center justify-center gap-3"
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{
             opacity: stage === "covering" ? 1 : 0,
-            scale: stage === "covering" ? 1 : 0.9,
+            scale: stage === "covering" ? 1 : 0.95,
           }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.35, ease: "easeInOut" }}
         >
           <span className="font-bold text-3xl sm:text-4xl tracking-tighter text-zinc-100 lowercase">
             rr.
@@ -342,7 +342,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
               className="absolute inset-y-0 left-0 bg-white w-full"
               initial={{ x: "-100%" }}
               animate={{ x: stage === "covering" ? "0%" : "100%" }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
             />
           </div>
         </motion.div>
