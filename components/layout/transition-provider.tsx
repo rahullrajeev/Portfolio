@@ -6,23 +6,6 @@ import { ReactNode, useEffect, useState, useRef, useCallback } from "react";
 
 type Stage = "pre-intro" | "intro" | "idle" | "covering" | "uncovering";
 
-const decodeAudio = (ctx: AudioContext, arrayBuffer: ArrayBuffer): Promise<AudioBuffer> => {
-  return new Promise((resolve, reject) => {
-    try {
-      const res = ctx.decodeAudioData(
-        arrayBuffer,
-        (buffer) => resolve(buffer),
-        (err) => reject(err)
-      );
-      if (res && typeof (res as any).then === 'function') {
-        (res as Promise<AudioBuffer>).then(resolve).catch(reject);
-      }
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
 const playPremiumIntroSound = (audioCtxRef: React.MutableRefObject<AudioContext | null>) => {
   try {
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -48,31 +31,8 @@ const playPremiumIntroSound = (audioCtxRef: React.MutableRefObject<AudioContext 
       silentSource.start(0);
     } catch {}
     
-    // Fetch and schedule the piano sound using Web Audio API for reliable playback
-    fetch('/piano.mpeg')
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => {
-        if (audioCtxRef.current !== ctx || ctx.state === 'closed') return;
-        return decodeAudio(ctx, arrayBuffer);
-      })
-      .then(audioBuffer => {
-        if (!audioBuffer || audioCtxRef.current !== ctx || ctx.state === 'closed') return;
-        const source = ctx.createBufferSource();
-        source.buffer = audioBuffer;
-        
-        const gainNode = ctx.createGain();
-        gainNode.gain.value = 0.15; // Decreased volume
-        
-        source.connect(gainNode);
-        gainNode.connect(ctx.destination);
-        
-        // 2.5s delay to play right after compression to rr.
-        source.start(ctx.currentTime + 2.5);
-      })
-      .catch(e => console.log("Failed to load or play piano audio", e));
-    
     const t0 = ctx.currentTime;
-    
+
     // Keystroke clicks (mechanical keyboard style)
     const text = "rahul rajeev";
     const typeStart = t0 + 0.5;
@@ -105,8 +65,36 @@ const playPremiumIntroSound = (audioCtxRef: React.MutableRefObject<AudioContext 
         osc.stop(time + 0.015);
     }
 
+    // --- SOFT FADING SOUND EFFECT ---
+    const tFade = t0 + 1.8;
+    const fadeGain = ctx.createGain();
+    const fadeFilter = ctx.createBiquadFilter();
+
+    fadeFilter.type = "lowpass";
+    fadeFilter.frequency.setValueAtTime(550, tFade);
+    fadeFilter.frequency.exponentialRampToValueAtTime(120, tFade + 2.8);
+
+    // Smooth subtle envelope: gentle swell in and long soft fade out
+    fadeGain.gain.setValueAtTime(0, tFade);
+    fadeGain.gain.linearRampToValueAtTime(0.035, tFade + 0.7);
+    fadeGain.gain.exponentialRampToValueAtTime(0.0001, tFade + 3.0);
+
+    fadeFilter.connect(fadeGain);
+    fadeGain.connect(ctx.destination);
+
+    // Ultra-soft, warm sine chords
+    const chordFreqs = [146.83, 220.0, 369.99];
+    chordFreqs.forEach((freq) => {
+      const osc = ctx.createOscillator();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, tFade);
+
+      osc.connect(fadeFilter);
+      osc.start(tFade);
+      osc.stop(tFade + 3.1);
+    });
   } catch (e) {
-    console.log("Audio autoplay blocked or not supported");
+    console.log("Audio autoplay blocked or not supported", e);
   }
 };
 
