@@ -61,6 +61,11 @@ export function TransitionLink({
     // Set transition state
     document.body.dataset.transitioning = "true";
 
+    // Safety auto-reset in case transition gets delayed
+    setTimeout(() => {
+      document.body.dataset.transitioning = "false";
+    }, 2000);
+
     // Prefetch immediately on click
     router.prefetch(targetUrl);
 

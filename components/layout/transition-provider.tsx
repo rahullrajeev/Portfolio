@@ -167,6 +167,9 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       stopIntroAudio();
 
       if (isNavigating.current) return;
+      
+      // Ensure intro overlay is closed so shutter sweep handles navigation
+      setIsFirstLoad(false);
       isNavigating.current = true;
       routeReady.current = false;
       coverFinished.current = false;
@@ -176,7 +179,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       setTimeout(() => {
         coverFinished.current = true;
         checkUncover();
-      }, 700);
+      }, 500);
 
       // Safety fallback: force uncover if route loading takes too long
       setTimeout(() => {
@@ -185,7 +188,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
           coverFinished.current = true;
           checkUncover();
         }
-      }, 2200);
+      }, 1800);
     };
 
     window.addEventListener("page-transition-start", handleStart);
@@ -200,7 +203,13 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     if (prevPathname.current !== pathname) {
       prevPathname.current = pathname;
       routeReady.current = true;
-      checkUncover();
+      if (isNavigating.current) {
+        checkUncover();
+      } else {
+        // Direct route change or browser history popstate
+        setStage("idle");
+        document.body.dataset.transitioning = "false";
+      }
     }
   }, [pathname, checkUncover, stopIntroAudio]);
 
@@ -212,7 +221,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         setStage("idle");
         setIsFirstLoad(false);
         document.body.dataset.transitioning = "false";
-      }, 800);
+      }, 650);
       return () => clearTimeout(timer);
     }
   }, [stage, stopIntroAudio]);
@@ -306,7 +315,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
           transformOrigin,
           display: isFirstLoad ? "none" : "flex"
         }}
-        initial={{ scaleY: 1 }}
+        initial={{ scaleY: 0 }}
         animate={{ scaleY }}
         transition={{
           duration: stage === "covering" ? 0.65 : 0.75,
