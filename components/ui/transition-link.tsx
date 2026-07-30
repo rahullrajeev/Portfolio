@@ -61,10 +61,10 @@ export function TransitionLink({
     // Set transition state
     document.body.dataset.transitioning = "true";
 
-    // Safety auto-reset in case transition gets delayed
+    // Safety fallback to prevent UI locks if navigation is delayed or cancelled
     setTimeout(() => {
       document.body.dataset.transitioning = "false";
-    }, 2000);
+    }, 2500);
 
     // Prefetch immediately on click
     router.prefetch(targetUrl);

@@ -1,4 +1,4 @@
-import { TransitionLink as Link } from "@/components/ui/transition-link";
+import Link from "next/link";
 import { PageTransition } from "@/components/layout/page-transition";
 
 export default function NotFound() {

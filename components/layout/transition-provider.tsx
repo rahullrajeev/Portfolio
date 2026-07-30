@@ -203,13 +203,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     if (prevPathname.current !== pathname) {
       prevPathname.current = pathname;
       routeReady.current = true;
-      if (isNavigating.current) {
-        checkUncover();
-      } else {
-        // Direct route change or browser history popstate
-        setStage("idle");
-        document.body.dataset.transitioning = "false";
-      }
+      checkUncover();
     }
   }, [pathname, checkUncover, stopIntroAudio]);
 
@@ -221,7 +215,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         setStage("idle");
         setIsFirstLoad(false);
         document.body.dataset.transitioning = "false";
-      }, 650);
+      }, 600);
       return () => clearTimeout(timer);
     }
   }, [stage, stopIntroAudio]);
@@ -315,10 +309,10 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
           transformOrigin,
           display: isFirstLoad ? "none" : "flex"
         }}
-        initial={{ scaleY: 0 }}
+        initial={false}
         animate={{ scaleY }}
         transition={{
-          duration: stage === "covering" ? 0.65 : 0.75,
+          duration: stage === "covering" ? 0.5 : 0.55,
           ease: stage === "covering" ? [0.65, 0, 0.35, 1] : [0.33, 1, 0.68, 1],
         }}
       >
@@ -329,7 +323,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
             opacity: stage === "covering" ? 1 : 0,
             scale: stage === "covering" ? 1 : 0.95,
           }}
-          transition={{ duration: 0.35, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <span className="font-bold text-3xl sm:text-4xl tracking-tighter text-zinc-100 lowercase">
             rr.
@@ -339,7 +333,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
               className="absolute inset-y-0 left-0 bg-white w-full"
               initial={{ x: "-100%" }}
               animate={{ x: stage === "covering" ? "0%" : "100%" }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
             />
           </div>
         </motion.div>

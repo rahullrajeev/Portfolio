@@ -27,6 +27,7 @@ const nextConfig: NextConfig = {
   },
   
   transpilePackages: ['motion'],
+  allowedDevOrigins: ['*.asia-southeast1.run.app', '*.run.app', 'localhost:3000'],
   webpack: (config, {dev}) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
     // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
