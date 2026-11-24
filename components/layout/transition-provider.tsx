@@ -42,7 +42,6 @@ const playPremiumIntroSound = (audioCtxRef: React.MutableRefObject<AudioContext 
         if (text[i] === ' ') continue;
         const time = typeStart + i * charTime;
         
-        // Use a square wave with bandpass for a "clicky" transient
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         const filter = ctx.createBiquadFilter();
@@ -74,7 +73,6 @@ const playPremiumIntroSound = (audioCtxRef: React.MutableRefObject<AudioContext 
     fadeFilter.frequency.setValueAtTime(550, tFade);
     fadeFilter.frequency.exponentialRampToValueAtTime(120, tFade + 2.8);
 
-    // Smooth subtle envelope: gentle swell in and long soft fade out
     fadeGain.gain.setValueAtTime(0, tFade);
     fadeGain.gain.linearRampToValueAtTime(0.035, tFade + 0.7);
     fadeGain.gain.exponentialRampToValueAtTime(0.0001, tFade + 3.0);
@@ -82,7 +80,6 @@ const playPremiumIntroSound = (audioCtxRef: React.MutableRefObject<AudioContext 
     fadeFilter.connect(fadeGain);
     fadeGain.connect(ctx.destination);
 
-    // Ultra-soft, warm sine chords
     const chordFreqs = [146.83, 220.0, 369.99];
     chordFreqs.forEach((freq) => {
       const osc = ctx.createOscillator();
@@ -119,7 +116,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   const [introStep, setIntroStep] = useState(0);
   const [isFirstLoad, setIsFirstLoad] = useState(() => pathname === "/");
   const prevPathname = useRef(pathname);
-  
+
   const isNavigating = useRef(false);
   const routeReady = useRef(false);
   const coverFinished = useRef(false);
@@ -131,11 +128,11 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     };
   }, [stopIntroAudio]);
 
-  // Handle initial cinematic intro
+  // Handle initial cinematic intro sequence
   useEffect(() => {
     if (stage === "intro") {
       document.body.dataset.transitioning = "true";
-      
+
       const t1 = setTimeout(() => setIntroStep(1), 500); // Start typing
       const t2 = setTimeout(() => setIntroStep(2), 2000); // Merge
       const t3 = setTimeout(() => setIntroStep(3), 2500); // Dot appears
@@ -149,7 +146,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         clearTimeout(t2);
         clearTimeout(t3);
         clearTimeout(t4);
-      }
+      };
     }
   }, [stage]);
 
@@ -163,25 +160,21 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const handleStart = () => {
-      // Always stop intro audio if navigating or page transition starts
       stopIntroAudio();
 
       if (isNavigating.current) return;
       
-      // Ensure intro overlay is closed so shutter sweep handles navigation
       setIsFirstLoad(false);
       isNavigating.current = true;
       routeReady.current = false;
       coverFinished.current = false;
       setStage("covering");
 
-      // Minimum cover duration before allowing uncover
       setTimeout(() => {
         coverFinished.current = true;
         checkUncover();
       }, 500);
 
-      // Safety fallback: force uncover if route loading takes too long
       setTimeout(() => {
         if (isNavigating.current) {
           routeReady.current = true;
@@ -255,50 +248,51 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
             </button>
           </motion.div>
         ) : (
+          /* Classic Minimal Typography Animation */
           <div className="flex items-center text-3xl sm:text-4xl text-zinc-100 font-bold tracking-tighter lowercase">
             {"rahul rajeev".split("").map((char, i) => {
-            const isR = char === 'r';
-            return (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, width: "auto" }}
-                animate={{
-                  opacity: introStep >= 1 ? (introStep >= 2 && !isR ? 0 : 1) : 0,
-                  width: introStep >= 2 && !isR ? 0 : "auto",
-                  marginRight: introStep >= 2 && char === ' ' ? 0 : (char === ' ' ? "0.4em" : 0),
-                }}
-                transition={{
-                  opacity: {
-                    delay: introStep === 1 ? i * (1.0 / 12) : 0,
-                    duration: introStep >= 2 ? 0.3 : 0.01,
-                  },
-                  width: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-                  marginRight: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-                }}
-                className={`inline-block overflow-hidden whitespace-nowrap ${introStep >= 2 && isR ? "font-bold tracking-tighter" : "font-medium tracking-tight"}`}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </motion.span>
-            );
-          })}
-          <motion.span
-            initial={{ opacity: 0, x: -10, width: 0 }}
-            animate={{ 
-              opacity: introStep >= 3 ? 1 : 0, 
-              x: introStep >= 3 ? 0 : -10,
-              width: introStep >= 3 ? "auto" : 0
-            }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="inline-block font-bold tracking-tighter"
-          >
-            .
-          </motion.span>
-          <motion.span
-            animate={{ opacity: introStep >= 2 ? 0 : [1, 0, 1] }}
-            transition={{ repeat: introStep >= 2 ? 0 : Infinity, duration: 0.8 }}
-            className="inline-block w-[2px] sm:w-[3px] h-[0.9em] bg-zinc-100 ml-[2px] translate-y-[0.1em]"
-          />
-        </div>
+              const isR = char === 'r';
+              return (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, width: "auto" }}
+                  animate={{
+                    opacity: introStep >= 1 ? (introStep >= 2 && !isR ? 0 : 1) : 0,
+                    width: introStep >= 2 && !isR ? 0 : "auto",
+                    marginRight: introStep >= 2 && char === ' ' ? 0 : (char === ' ' ? "0.4em" : 0),
+                  }}
+                  transition={{
+                    opacity: {
+                      delay: introStep === 1 ? i * (1.0 / 12) : 0,
+                      duration: introStep >= 2 ? 0.3 : 0.01,
+                    },
+                    width: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                    marginRight: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                  }}
+                  className={`inline-block overflow-hidden whitespace-nowrap ${introStep >= 2 && isR ? "font-bold tracking-tighter" : "font-medium tracking-tight"}`}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              );
+            })}
+            <motion.span
+              initial={{ opacity: 0, x: -10, width: 0 }}
+              animate={{ 
+                opacity: introStep >= 3 ? 1 : 0, 
+                x: introStep >= 3 ? 0 : -10,
+                width: introStep >= 3 ? "auto" : 0
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="inline-block font-bold tracking-tighter"
+            >
+              .
+            </motion.span>
+            <motion.span
+              animate={{ opacity: introStep >= 2 ? 0 : [1, 0, 1] }}
+              transition={{ repeat: introStep >= 2 ? 0 : Infinity, duration: 0.8 }}
+              className="inline-block w-[2px] sm:w-[3px] h-[0.9em] bg-zinc-100 ml-[2px] translate-y-[0.1em]"
+            />
+          </div>
         )}
       </motion.div>
 
@@ -341,3 +335,4 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     </>
   );
 }
+
