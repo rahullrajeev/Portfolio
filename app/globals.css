@@ -34,3 +34,18 @@
     touch-action: manipulation;
   }
 }
+
+@media (max-width: 767px) {
+  html,
+  body {
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Keep small mobile tag pills crisp without thick stroke artifacts */
+  .mobile-no-stroke {
+    -webkit-text-stroke: 0 !important;
+  }
+}

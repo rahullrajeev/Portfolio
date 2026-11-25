@@ -14,9 +14,11 @@ import {
   Area
 } from "recharts";
 import { ArrowUpRight, Activity, Zap, Search, ShieldCheck, Cpu, Layers } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function SEOExpertise() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -73,7 +75,7 @@ export default function SEOExpertise() {
     <PageTransition>
       <div ref={containerRef} className="relative min-h-screen">
         <motion.div
-          style={{ y: bgY }}
+          style={isMobile ? undefined : { y: bgY }}
           className="fixed inset-0 -z-10 h-full w-full pointer-events-none opacity-10 dark:opacity-[0.03] mix-blend-multiply dark:mix-blend-luminosity"
         >
           <Image
@@ -86,14 +88,14 @@ export default function SEOExpertise() {
           />
         </motion.div>
 
-        <section className="min-h-screen py-16 md:py-24 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto space-y-16 relative z-10">
+        <section className="min-h-screen py-8 sm:py-12 md:py-24 px-5 sm:px-6 md:px-12 max-w-6xl mx-auto space-y-10 md:space-y-16 relative z-10">
           {/* Hero Header */}
           <motion.div 
-            style={{ y: headerY }}
+            style={isMobile ? undefined : { y: headerY }}
             initial={{ opacity: 0, y: 16 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6 }} 
-            className="border-b border-zinc-200 dark:border-zinc-800 pb-10"
+            transition={{ duration: isMobile ? 0.4 : 0.6 }} 
+            className="border-b border-zinc-200 dark:border-zinc-800 pb-7 md:pb-10"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-full text-xs font-mono font-medium mb-4">
               Search Engine & AI Overview Engineering
@@ -107,8 +109,8 @@ export default function SEOExpertise() {
           </motion.div>
 
           {/* Section 1: Streamlined Methodology & Skills */}
-          <motion.div style={{ y: cardsY }} className="space-y-6">
-            <div className="flex items-center justify-between">
+          <motion.div style={isMobile ? undefined : { y: cardsY }} className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
               <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight">
                 Methodology & Skill Domains
               </h2>
@@ -187,12 +189,12 @@ export default function SEOExpertise() {
                 Organic Growth & Trajectory
               </h2>
               <div className="bg-white dark:bg-zinc-900/80 p-5 rounded-xl border border-zinc-200 dark:border-zinc-800">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4">
                   <div>
                     <h3 className="font-medium text-sm text-zinc-900 dark:text-zinc-100">Traffic Expansion (6-Month Campaign)</h3>
                     <p className="text-xs text-zinc-500">Validated GA4 & Search Console Sessions</p>
                   </div>
-                  <div className="flex items-center gap-1.5 text-emerald-500 text-xs font-mono font-bold bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+                  <div className="flex items-center gap-1.5 text-emerald-500 text-xs font-mono font-bold bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 self-start sm:self-auto shrink-0">
                     <ArrowUpRight size={14} />
                     <span>+350% Growth</span>
                   </div>
@@ -250,9 +252,9 @@ export default function SEOExpertise() {
                     key={idx} 
                     className="bg-white dark:bg-zinc-900/80 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800"
                   >
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1.5 sm:mb-1">
                       <span className="font-bold text-sm text-zinc-900 dark:text-zinc-100">{job.role} <span className="font-normal text-zinc-500">• {job.company}</span></span>
-                      <span className="font-mono text-[11px] text-zinc-500">{job.period}</span>
+                      <span className="font-mono text-[11px] text-zinc-500 shrink-0">{job.period}</span>
                     </div>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">{job.desc}</p>
                   </div>
@@ -330,24 +332,24 @@ export default function SEOExpertise() {
               {/* Interactive Frame Wrapper */}
               <div className="pt-6 border-t border-zinc-800">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-zinc-300 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-lg flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                      <span>vidhyarthimithram.com • Performance & Diagnostic Showcase</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="text-xs font-mono text-zinc-300 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-lg flex items-center gap-2 max-w-full">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+                      <span className="break-words leading-snug">vidhyarthimithram.com • Performance & Diagnostic Showcase</span>
                     </span>
                   </div>
                   <a 
                     href="/seo-demo" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="text-xs font-mono text-zinc-200 hover:text-white flex items-center gap-1.5 font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3 py-1.5 rounded-lg transition-colors shrink-0 self-start sm:self-auto"
+                    className="text-xs font-mono text-zinc-200 hover:text-white flex items-center gap-1.5 font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3 py-1.5 min-h-[44px] md:min-h-0 rounded-lg transition-colors shrink-0 self-start sm:self-auto"
                   >
                     <span>Full Screen Console</span>
                     <ArrowUpRight size={14} />
                   </a>
                 </div>
 
-                <div className="w-full h-[420px] sm:h-[580px] md:h-[680px] lg:h-[720px] rounded-xl border border-zinc-800 overflow-hidden relative shadow-2xl bg-zinc-950">
+                <div className="w-full h-[480px] sm:h-[580px] md:h-[680px] lg:h-[720px] rounded-xl border border-zinc-800 overflow-hidden relative shadow-2xl bg-zinc-950">
                   <iframe 
                     src="/seo-demo" 
                     title="Vidhyarthi Mithram SEO Performance & Audit Showcase"
@@ -364,7 +366,7 @@ export default function SEOExpertise() {
         {/* Mouse Scroll Indicator Cue */}
         <motion.div
           style={{ opacity: scrollCueOpacity }}
-          className="flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
+          className="hidden md:flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
         >
           <div className="w-5 h-8 rounded-full border-2 border-zinc-400/60 dark:border-zinc-600/60 flex justify-center p-1">
             <motion.div

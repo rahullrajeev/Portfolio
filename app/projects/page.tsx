@@ -6,9 +6,11 @@ import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import { TransitionLink as Link } from "@/components/ui/transition-link";
 import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { useRef } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -30,13 +32,13 @@ export default function Projects() {
   return (
     <PageTransition>
       <div ref={containerRef} className="relative min-h-screen">
-        <section className="min-h-screen py-16 sm:py-24 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto relative z-10">
+        <section className="min-h-screen py-8 sm:py-12 md:py-24 px-5 sm:px-6 md:px-12 max-w-6xl mx-auto relative z-10">
           <motion.div
-             style={{ y: headerY }}
+             style={isMobile ? undefined : { y: headerY }}
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.8 }}
-             className="mb-10 sm:mb-16"
+             transition={{ duration: isMobile ? 0.45 : 0.8 }}
+             className="mb-8 sm:mb-12 md:mb-16"
           >
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-4 sm:mb-6">
               Selected <span className="text-zinc-600 dark:text-zinc-400">Works</span>
@@ -45,7 +47,7 @@ export default function Projects() {
 
           {/* ModuSpark Featured Case Study */}
           <motion.div
-            style={{ y: cardY }}
+            style={isMobile ? undefined : { y: cardY }}
             className="bg-white dark:bg-zinc-950/50 rounded-2xl sm:rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm"
           >
             <div className="bg-zinc-950 p-6 sm:p-8 md:p-12 text-white text-center flex flex-col items-center">
@@ -90,36 +92,36 @@ export default function Projects() {
                  <h3 className="font-display text-xs font-bold tracking-widest text-zinc-700 dark:text-zinc-400 mb-4 sm:mb-8">Access Points</h3>
                  
                  <div className="flex flex-col w-full gap-3 sm:gap-4">
-                   <a 
-                     href="https://moduspark-ai-component-studio.vercel.app/" 
-                     target="_blank" 
-                     rel="noopener noreferrer"
-                     className="group flex items-center justify-between p-4 sm:p-6 bg-black dark:bg-zinc-50 text-white dark:text-zinc-900 border-2 border-black dark:border-zinc-50 rounded-xl transition-all duration-200 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-none text-xs sm:text-sm"
-                   >
-                     <span className="font-bold tracking-wide">Live Platform Demo</span>
-                     <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
-                   </a>
-                   
-                   <a 
-                     href="https://github.com/rahullrajeev/ModuSpark-Ai-Component-Studio" 
-                     target="_blank" 
-                     rel="noopener noreferrer"
-                     className="group flex items-center justify-between p-4 sm:p-6 bg-white dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 rounded-xl transition-all duration-200 hover:border-zinc-500 dark:hover:border-zinc-400 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-none text-xs sm:text-sm"
-                   >
-                     <span className="font-bold tracking-wide flex items-center gap-2 sm:gap-3">
-                       <Github className="w-4 h-4 sm:w-5 sm:h-5" /> Source Code
-                     </span>
-                     <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
-                   </a>
+                     <a 
+                       href="https://moduspark-ai-component-studio.vercel.app/" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       className="group flex items-center justify-between p-4 sm:p-6 min-h-[52px] md:min-h-0 bg-black dark:bg-zinc-50 text-white dark:text-zinc-900 border-2 border-black dark:border-zinc-50 rounded-xl transition-all duration-200 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-none active:scale-[0.99] md:active:scale-100 text-xs sm:text-sm"
+                     >
+                       <span className="font-bold tracking-wide">Live Platform Demo</span>
+                       <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
+                     </a>
+                     
+                     <a 
+                       href="https://github.com/rahullrajeev/ModuSpark-Ai-Component-Studio" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       className="group flex items-center justify-between p-4 sm:p-6 min-h-[52px] md:min-h-0 bg-white dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 rounded-xl transition-all duration-200 hover:border-zinc-500 dark:hover:border-zinc-400 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-none active:scale-[0.99] md:active:scale-100 text-xs sm:text-sm"
+                     >
+                       <span className="font-bold tracking-wide flex items-center gap-2 sm:gap-3">
+                         <Github className="w-4 h-4 sm:w-5 sm:h-5" /> Source Code
+                       </span>
+                       <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
+                     </a>
+                   </div>
                  </div>
-               </div>
-            </Grid>
-            
-            <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-zinc-950/80">
-              <motion.div
-                style={{ scale: iframeScale }}
-                className="w-full bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden relative shadow-inner flex items-center justify-center p-1 sm:p-2 h-[350px] sm:h-[450px] md:h-[60vh] md:min-h-[500px]"
-              >
+              </Grid>
+              
+              <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-zinc-950/80">
+                <motion.div
+                  style={isMobile ? undefined : { scale: iframeScale }}
+                  className="w-full bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden relative shadow-inner flex items-center justify-center p-1 sm:p-2 h-[380px] sm:h-[450px] md:h-[60vh] md:min-h-[500px]"
+                >
                   <iframe 
                     src="https://moduspark-ai-component-studio.vercel.app/" 
                     title="ModuSpark AI Component Studio"
@@ -135,7 +137,7 @@ export default function Projects() {
         {/* Mouse Scroll Indicator Cue */}
         <motion.div
           style={{ opacity: scrollCueOpacity }}
-          className="flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
+          className="hidden md:flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
         >
           <div className="w-5 h-8 rounded-full border-2 border-zinc-400/60 dark:border-zinc-600/60 flex justify-center p-1">
             <motion.div

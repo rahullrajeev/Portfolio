@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef, ReactNode } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface RevealProps {
   children: ReactNode;
@@ -12,9 +13,13 @@ interface RevealProps {
 
 export function Reveal({ children, width = "100%", delay = 0, direction = "up" }: RevealProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+  const isMobile = useIsMobile();
+  const isInView = useInView(ref, { once: true, margin: isMobile ? "-4% 0px" : "-10% 0px" });
 
   const getHiddenTransform = () => {
+    if (isMobile) {
+      return { opacity: 0, y: 14, x: 0 };
+    }
     switch (direction) {
       case "up":
         return { opacity: 0, y: 28 };
@@ -38,7 +43,11 @@ export function Reveal({ children, width = "100%", delay = 0, direction = "up" }
         }}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
+        transition={{
+          duration: isMobile ? 0.32 : 0.45,
+          delay: isMobile ? Math.min(delay, 0.12) : delay,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
         {children}
       </motion.div>

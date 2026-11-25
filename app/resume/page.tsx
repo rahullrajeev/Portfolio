@@ -5,9 +5,11 @@ import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { Eye } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Resume() {
   const [activeResume, setActiveResume] = useState<"SD" | "SEO">("SD");
+  const isMobile = useIsMobile();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -41,10 +43,10 @@ export default function Resume() {
             priority
           />
         </div>
-        <section className="min-h-screen py-16 sm:py-24 px-4 sm:px-6 md:px-12 max-w-5xl mx-auto flex flex-col relative z-10">
+        <section className="min-h-screen py-8 sm:py-12 md:py-24 px-4 sm:px-6 md:px-12 max-w-5xl mx-auto flex flex-col relative z-10">
           <motion.div
-            style={{ y: headerY }}
-            className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-6 md:gap-8"
+            style={isMobile ? undefined : { y: headerY }}
+            className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 sm:mb-8 md:mb-12 gap-5 md:gap-8"
           >
             <motion.div
                initial={{ opacity: 0, y: 20 }}
@@ -58,17 +60,17 @@ export default function Resume() {
             <motion.div 
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
-               className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-800 rounded-full"
+               className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-800 rounded-full w-full sm:w-auto"
             >
                <button
                   onClick={() => setActiveResume("SD")}
-                  className={`px-4 sm:px-6 py-2 rounded-full text-[11px] sm:text-xs font-bold tracking-widest transition-colors ${activeResume === "SD" ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300"}`}
+                  className={`flex-1 sm:flex-none min-h-[44px] md:min-h-0 px-4 sm:px-6 py-2 rounded-full text-[11px] sm:text-xs font-bold tracking-widest transition-colors ${activeResume === "SD" ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300"}`}
                >
                  Developer
                </button>
                <button
                   onClick={() => setActiveResume("SEO")}
-                  className={`px-4 sm:px-6 py-2 rounded-full text-[11px] sm:text-xs font-bold tracking-widest transition-colors ${activeResume === "SEO" ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300"}`}
+                  className={`flex-1 sm:flex-none min-h-[44px] md:min-h-0 px-4 sm:px-6 py-2 rounded-full text-[11px] sm:text-xs font-bold tracking-widest transition-colors ${activeResume === "SEO" ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300"}`}
                >
                  SEO Expert
                </button>
@@ -76,16 +78,16 @@ export default function Resume() {
           </motion.div>
 
           <motion.div 
-            style={{ y: resumeCardY }}
+            style={isMobile ? undefined : { y: resumeCardY }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="w-full h-[70vh] sm:h-[60vh] min-h-[420px] sm:min-h-[600px] md:min-h-[800px] bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm relative flex items-center justify-center p-1 sm:p-2"
+            transition={{ delay: isMobile ? 0.08 : 0.2 }}
+            className="w-full h-auto md:h-[60vh] md:min-h-[800px] bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm relative flex items-center justify-center p-1 sm:p-2"
           >
              <div className="w-full h-full bg-white dark:bg-zinc-900 rounded-xl sm:rounded-2xl overflow-hidden">
                {activeResume === "SD" ? (
-                 <div className="w-full h-full bg-[#f8f9fa] dark:bg-zinc-950/50 overflow-y-auto">
-                   <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 min-h-full py-8 px-4 sm:py-12 sm:px-8 md:py-16 md:px-16 text-zinc-900 dark:text-zinc-100 shadow-sm border-x border-zinc-100 dark:border-zinc-800 font-sans">
+                 <div className="w-full h-full bg-[#f8f9fa] dark:bg-zinc-950/50 overflow-visible md:overflow-y-auto">
+                   <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 min-h-full py-6 px-4 sm:py-10 sm:px-8 md:py-16 md:px-16 text-zinc-900 dark:text-zinc-100 shadow-sm border-x border-zinc-100 dark:border-zinc-800 font-sans">
                      <header className="mb-8 sm:mb-10 text-left border-b border-zinc-200 dark:border-zinc-800 pb-6 sm:pb-8">
                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 sm:mb-6">
                          <div>
@@ -96,19 +98,19 @@ export default function Resume() {
                             href="/Rahul.ai.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-3 md:mt-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+                            className="mt-3 md:mt-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[44px] md:min-h-0 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
                           >
                             <Eye size={16} />
                             <span>View Resume</span>
                           </a>
                        </div>
-                       <div className="flex flex-wrap gap-x-2 sm:gap-x-4 gap-y-1.5 text-[11px] sm:text-xs md:text-sm font-mono text-zinc-500 dark:text-zinc-400">
+                       <div className="flex flex-wrap gap-x-2 sm:gap-x-4 gap-y-1.5 text-[11px] sm:text-xs md:text-sm font-mono text-zinc-500 dark:text-zinc-400 break-words">
                          <span>Kochi, India</span> •
                          <span>+91-6282981465</span> •
-                         <a href="mailto:r4hullrajeev@gmail.com" className="hover:text-black dark:hover:text-white transition-colors">r4hullrajeev@gmail.com</a> •
-                         <a href="https://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">linkedin.com/in/rahullrajeev</a> •
-                         <a href="https://github.com/rahullrajeev/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">github.com/rahullrajeev/</a> •
-                         <a href="https://rahullrajeev.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">rahullrajeev.vercel.app</a>
+                         <a href="mailto:r4hullrajeev@gmail.com" className="hover:text-black dark:hover:text-white transition-colors break-all">r4hullrajeev@gmail.com</a> •
+                         <a href="https://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors break-all">linkedin.com/in/rahullrajeev</a> •
+                         <a href="https://github.com/rahullrajeev/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors break-all">github.com/rahullrajeev/</a> •
+                         <a href="https://rahullrajeev.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors break-all">rahullrajeev.vercel.app</a>
                        </div>
                      </header>
 
@@ -188,30 +190,30 @@ export default function Resume() {
                    </div>
                  </div>
                ) : (
-                 <div className="w-full h-full bg-[#f8f9fa] dark:bg-zinc-950/50 overflow-y-auto">
-                   <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 min-h-full py-12 px-8 md:py-16 md:px-16 text-zinc-900 dark:text-zinc-100 shadow-sm border-x border-zinc-100 dark:border-zinc-800 font-sans">
-                     <header className="mb-10 text-left border-b border-zinc-200 dark:border-zinc-800 pb-8">
-                       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                 <div className="w-full h-full bg-[#f8f9fa] dark:bg-zinc-950/50 overflow-visible md:overflow-y-auto">
+                   <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 min-h-full py-6 px-4 sm:py-10 sm:px-8 md:py-16 md:px-16 text-zinc-900 dark:text-zinc-100 shadow-sm border-x border-zinc-100 dark:border-zinc-800 font-sans">
+                     <header className="mb-8 md:mb-10 text-left border-b border-zinc-200 dark:border-zinc-800 pb-6 md:pb-8">
+                       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6">
                          <div>
-                           <h1 className="font-display text-4xl md:text-5xl font-display font-bold tracking-tight mb-2">Rahul Rajeev</h1>
-                           <h2 className="font-display text-xl md:text-2xl font-light text-zinc-600 dark:text-zinc-400 tracking-widest font-display">SEO Specialist</h2>
+                           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight mb-1 md:mb-2">Rahul Rajeev</h1>
+                           <h2 className="font-display text-base sm:text-xl md:text-2xl font-light text-zinc-600 dark:text-zinc-400 tracking-wide md:tracking-widest font-display">SEO Specialist</h2>
                          </div>
                          <a
                             href="/RahulSeo.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-4 md:mt-0 flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+                            className="mt-3 md:mt-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[44px] md:min-h-0 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
                           >
                             <Eye size={16} />
                             <span>View Resume</span>
                           </a>
                        </div>
-                       <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs md:text-sm font-mono text-zinc-500 dark:text-zinc-400">
+                       <div className="flex flex-wrap gap-x-2 sm:gap-x-4 gap-y-1.5 sm:gap-y-2 text-[11px] sm:text-xs md:text-sm font-mono text-zinc-500 dark:text-zinc-400 break-words">
                          <span>Kochi, India</span> •
                          <span>+91-6282981465</span> •
-                         <a href="mailto:r4hullrajeev@gmail.com" className="hover:text-black dark:hover:text-white transition-colors">r4hullrajeev@gmail.com</a> •
-                         <a href="https://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">linkedin.com/in/rahullrajeev</a> •
-                         <a href="https://rahullrajeev.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors">rahullrajeev.vercel.app</a>
+                         <a href="mailto:r4hullrajeev@gmail.com" className="hover:text-black dark:hover:text-white transition-colors break-all">r4hullrajeev@gmail.com</a> •
+                         <a href="https://www.linkedin.com/in/rahullrajeev" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors break-all">linkedin.com/in/rahullrajeev</a> •
+                         <a href="https://rahullrajeev.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white transition-colors break-all">rahullrajeev.vercel.app</a>
                        </div>
                      </header>
 
@@ -307,7 +309,7 @@ export default function Resume() {
         {/* Mouse Scroll Indicator Cue */}
         <motion.div
           style={{ opacity: scrollCueOpacity }}
-          className="flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
+          className="hidden md:flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
         >
           <div className="w-5 h-8 rounded-full border-2 border-zinc-400/60 dark:border-zinc-600/60 flex justify-center p-1">
             <motion.div

@@ -31,7 +31,7 @@ export default function SEODemoPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans p-2 sm:p-4 md:p-6 select-none">
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans p-2.5 sm:p-4 md:p-6 select-none overflow-x-hidden">
       {/* Top Demo Header Bar */}
       <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 mb-4 sm:mb-6 border-b border-zinc-800/80">
         <div className="flex items-center gap-2.5">
@@ -52,11 +52,11 @@ export default function SEODemoPage() {
         </div>
 
         {/* Device Switcher & Quick Metrics */}
-        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
           <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded-lg p-1">
             <button
               onClick={() => setDevice("desktop")}
-              className={`p-1.5 rounded text-xs flex items-center gap-1.5 transition-colors ${
+              className={`p-1.5 min-h-[36px] min-w-[36px] md:min-h-0 md:min-w-0 justify-center rounded text-xs flex items-center gap-1.5 transition-colors ${
                 device === "desktop" ? "bg-zinc-800 text-white font-medium" : "text-zinc-400 hover:text-zinc-200"
               }`}
               title="Desktop View"
@@ -66,7 +66,7 @@ export default function SEODemoPage() {
             </button>
             <button
               onClick={() => setDevice("mobile")}
-              className={`p-1.5 rounded text-xs flex items-center gap-1.5 transition-colors ${
+              className={`p-1.5 min-h-[36px] min-w-[36px] md:min-h-0 md:min-w-0 justify-center rounded text-xs flex items-center gap-1.5 transition-colors ${
                 device === "mobile" ? "bg-zinc-800 text-white font-medium" : "text-zinc-400 hover:text-zinc-200"
               }`}
               title="Mobile View"
@@ -77,7 +77,7 @@ export default function SEODemoPage() {
           </div>
 
           <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-emerald-400 bg-zinc-900 border border-zinc-800 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg">
-            <TrendingUp size={13} />
+            <TrendingUp size={13} className="shrink-0" />
             <span>Organic Pos #5 (From #28)</span>
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function SEODemoPage() {
       <div className="flex items-center gap-1.5 sm:gap-2 border-b border-zinc-800 pb-2.5 mb-4 sm:mb-6 overflow-x-auto scrollbar-none">
         <button
           onClick={() => setActiveTab("serp")}
-          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 min-h-[40px] md:min-h-0 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
             activeTab === "serp"
               ? "bg-zinc-100 text-zinc-950 shadow-md"
               : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-zinc-800"
@@ -99,7 +99,7 @@ export default function SEODemoPage() {
 
         <button
           onClick={() => setActiveTab("audit")}
-          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 min-h-[40px] md:min-h-0 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
             activeTab === "audit"
               ? "bg-zinc-100 text-zinc-950 shadow-md"
               : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-zinc-800"
@@ -111,7 +111,7 @@ export default function SEODemoPage() {
 
         <button
           onClick={() => setActiveTab("analytics")}
-          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 min-h-[40px] md:min-h-0 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
             activeTab === "analytics"
               ? "bg-zinc-100 text-zinc-950 shadow-md"
               : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-zinc-800"
@@ -123,7 +123,7 @@ export default function SEODemoPage() {
 
         <button
           onClick={() => setActiveTab("pages")}
-          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 min-h-[40px] md:min-h-0 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wide transition-all whitespace-nowrap shrink-0 ${
             activeTab === "pages"
               ? "bg-zinc-100 text-zinc-950 shadow-md"
               : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-zinc-800"
@@ -141,15 +141,15 @@ export default function SEODemoPage() {
           <div className="bg-zinc-900/80 rounded-xl sm:rounded-2xl border border-zinc-800 p-2.5 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
             {/* View Mode Switcher Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 bg-zinc-950 p-2.5 sm:p-3 rounded-xl border border-zinc-800">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] sm:text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-800/80 px-2 py-1 rounded-md uppercase">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="text-[10px] sm:text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-800/80 px-2 py-1 rounded-md uppercase break-words leading-snug">
                   Keyword: best study abroad consultants in kochi
                 </span>
               </div>
-              <div className="flex items-center gap-1 bg-zinc-900 p-1 rounded-lg border border-zinc-800 text-[11px] sm:text-xs">
+              <div className="flex items-center gap-1 bg-zinc-900 p-1 rounded-lg border border-zinc-800 text-[11px] sm:text-xs shrink-0">
                 <button
                   onClick={() => setSerpViewMode("results")}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded font-medium transition-colors ${
+                  className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 min-h-[36px] md:min-h-0 rounded font-medium transition-colors ${
                     serpViewMode === "results"
                       ? "bg-emerald-500 text-zinc-950 font-bold shadow-sm"
                       : "text-zinc-400 hover:text-zinc-200"
@@ -160,7 +160,7 @@ export default function SEODemoPage() {
                 </button>
                 <button
                   onClick={() => setSerpViewMode("interactive")}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded font-medium transition-colors ${
+                  className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 min-h-[36px] md:min-h-0 rounded font-medium transition-colors ${
                     serpViewMode === "interactive"
                       ? "bg-emerald-500 text-zinc-950 font-bold shadow-sm"
                       : "text-zinc-400 hover:text-zinc-200"
@@ -182,7 +182,7 @@ export default function SEODemoPage() {
                       Vidhyarthi Mithram (<code className="text-emerald-400">vidhyarthimithram.com</code>) ranking proofs: Page 1 position & AI Overview citation.
                     </p>
                   </div>
-                  <div className="flex items-center gap-1.5 shrink-0">
+                  <div className="flex flex-wrap items-center gap-1.5 shrink-0">
                     <span className="px-2 py-0.5 rounded bg-zinc-900 text-emerald-400 font-mono text-[10px] sm:text-[11px] border border-zinc-800 font-semibold">
                       Page 1 Organic #5
                     </span>
@@ -195,10 +195,10 @@ export default function SEODemoPage() {
                 {/* Both Proof Screenshots Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                   {/* Proof 1: Google SERP Page 1 */}
-                  <div className="bg-zinc-950 rounded-xl sm:rounded-2xl border border-zinc-800 p-2 sm:p-3 space-y-2 shadow-lg">
-                    <div className="flex items-center justify-between border-b border-zinc-800/80 pb-1.5 px-1">
+                  <div className="bg-zinc-950 rounded-xl sm:rounded-2xl border border-zinc-800 p-2 sm:p-3 space-y-2 shadow-lg min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1 border-b border-zinc-800/80 pb-1.5 px-1">
                       <span className="text-[11px] font-mono font-semibold text-emerald-400 flex items-center gap-1">
-                        <CheckCircle2 size={12} />
+                        <CheckCircle2 size={12} className="shrink-0" />
                         <span>Google SERP Ranking (#5 Organic)</span>
                       </span>
                       <span className="text-[10px] text-zinc-500 font-mono">1 serp.png</span>
@@ -209,7 +209,7 @@ export default function SEODemoPage() {
                         alt="Google SERP proof for best study abroad consultants in kochi"
                         width={841}
                         height={1870}
-                        className="w-full min-w-[320px] sm:min-w-0 h-auto object-top rounded-lg shadow-xl"
+                        className="w-full min-w-0 h-auto object-top rounded-lg shadow-xl"
                         priority
                         referrerPolicy="no-referrer"
                       />
@@ -217,10 +217,10 @@ export default function SEODemoPage() {
                   </div>
 
                   {/* Proof 2: Google AI Overview (AEO) */}
-                  <div className="bg-zinc-950 rounded-xl sm:rounded-2xl border border-zinc-800 p-2 sm:p-3 space-y-2 shadow-lg">
-                    <div className="flex items-center justify-between border-b border-zinc-800/80 pb-1.5 px-1">
+                  <div className="bg-zinc-950 rounded-xl sm:rounded-2xl border border-zinc-800 p-2 sm:p-3 space-y-2 shadow-lg min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-1 border-b border-zinc-800/80 pb-1.5 px-1">
                       <span className="text-[11px] font-mono font-semibold text-zinc-200 flex items-center gap-1">
-                        <Sparkles size={12} className="text-emerald-400" />
+                        <Sparkles size={12} className="text-emerald-400 shrink-0" />
                         <span>Google AI Overview (AEO / GEO)</span>
                       </span>
                       <span className="text-[10px] text-zinc-500 font-mono">aeo.png</span>
@@ -231,7 +231,7 @@ export default function SEODemoPage() {
                         alt="Google AI Overview proof for Vidhyarthi Mithram"
                         width={841}
                         height={1870}
-                        className="w-full min-w-[320px] sm:min-w-0 h-auto object-top rounded-lg shadow-xl"
+                        className="w-full min-w-0 h-auto object-top rounded-lg shadow-xl"
                         priority
                         referrerPolicy="no-referrer"
                       />
@@ -260,9 +260,9 @@ export default function SEODemoPage() {
 
                 {/* AI Overview Box */}
                 <div className="p-4 md:p-5 rounded-xl bg-zinc-950 border border-zinc-800 relative overflow-hidden">
-                  <div className="flex items-center justify-between mb-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-1.5 mb-2.5">
                     <div className="flex items-center gap-2 text-zinc-200 font-medium text-xs font-mono">
-                      <Sparkles size={14} className="text-emerald-400" />
+                      <Sparkles size={14} className="text-emerald-400 shrink-0" />
                       <span>Google AI Overview (AEO / GEO Optimised)</span>
                     </div>
                     <span className="text-[10px] font-mono text-zinc-500">Generative Citation</span>
@@ -272,7 +272,7 @@ export default function SEODemoPage() {
                   </p>
                   <div className="flex flex-wrap gap-2 text-xs">
                     <span className="bg-zinc-900 border border-zinc-800 text-zinc-200 px-2.5 py-1 rounded-lg flex items-center gap-1.5 font-mono text-[11px]">
-                      <CheckCircle2 size={12} className="text-emerald-400" /> Cites Vidhyarthi Mithram Platform
+                      <CheckCircle2 size={12} className="text-emerald-400 shrink-0" /> Cites Vidhyarthi Mithram Platform
                     </span>
                     <span className="bg-zinc-900 text-zinc-400 border border-zinc-800/60 px-2.5 py-1 rounded-lg text-[11px]">
                       100% Entity Match
@@ -282,12 +282,12 @@ export default function SEODemoPage() {
 
                 {/* Organic Result Card for Vidhyarthi Mithram */}
                 <div className="bg-zinc-950 rounded-xl p-4 sm:p-5 border border-zinc-800 relative group shadow-md">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono">
-                      <Globe size={13} className="text-zinc-400" />
-                      <span>https://vidhyarthimithram.com</span>
+                  <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+                    <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono min-w-0">
+                      <Globe size={13} className="text-zinc-400 shrink-0" />
+                      <span className="truncate">https://vidhyarthimithram.com</span>
                     </div>
-                    <span className="text-xs font-mono text-emerald-400 bg-zinc-900 border border-zinc-800 px-2.5 py-0.5 rounded">
+                    <span className="text-xs font-mono text-emerald-400 bg-zinc-900 border border-zinc-800 px-2.5 py-0.5 rounded shrink-0">
                       Pos #5 (Page 1)
                     </span>
                   </div>
@@ -383,27 +383,27 @@ export default function SEODemoPage() {
 
             {/* Technical Checklist */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex items-center justify-between">
+              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex flex-wrap items-center justify-between gap-1.5">
                 <span className="text-zinc-300 font-medium">XML Sitemap & Indexing Pipeline</span>
-                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1">
+                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1 shrink-0">
                   <CheckCircle2 size={13} /> Submitted & Active
                 </span>
               </div>
-              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex items-center justify-between">
+              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex flex-wrap items-center justify-between gap-1.5">
                 <span className="text-zinc-300 font-medium">Robots.txt Crawl Directives</span>
-                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1">
+                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1 shrink-0">
                   <CheckCircle2 size={13} /> Clean & Optimized
                 </span>
               </div>
-              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex items-center justify-between">
+              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex flex-wrap items-center justify-between gap-1.5">
                 <span className="text-zinc-300 font-medium">Mobile Friendliness Audit</span>
-                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1">
+                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1 shrink-0">
                   <CheckCircle2 size={13} /> Passed (100%)
                 </span>
               </div>
-              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex items-center justify-between">
+              <div className="bg-zinc-950 p-3 rounded-lg border border-zinc-800 flex flex-wrap items-center justify-between gap-1.5">
                 <span className="text-zinc-300 font-medium">Internal Linking Mesh</span>
-                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1">
+                <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1 shrink-0">
                   <CheckCircle2 size={13} /> Topic Cluster Enabled
                 </span>
               </div>
@@ -444,7 +444,7 @@ export default function SEODemoPage() {
 
             {/* Analytics Dashboard Visualizer */}
             <div className="bg-zinc-950 rounded-xl p-5 border border-zinc-800">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-wrap items-center justify-between gap-1.5 mb-4">
                 <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-widest font-mono">
                   Google Analytics 4 & Search Console Growth Pattern
                 </h3>
@@ -453,9 +453,9 @@ export default function SEODemoPage() {
 
               <div className="space-y-3">
                 <div>
-                  <div className="flex justify-between text-xs mb-1">
+                  <div className="flex flex-wrap justify-between gap-x-2 gap-y-0.5 text-xs mb-1">
                     <span className="text-zinc-400">Month 1-2 (Baseline & Technical Fixes)</span>
-                    <span className="text-zinc-400 font-mono">4,200 sessions</span>
+                    <span className="text-zinc-400 font-mono shrink-0">4,200 sessions</span>
                   </div>
                   <div className="w-full bg-zinc-900 rounded-full h-2 overflow-hidden">
                     <div className="bg-zinc-700 h-full rounded-full" style={{ width: "30%" }}></div>
@@ -463,9 +463,9 @@ export default function SEODemoPage() {
                 </div>
 
                 <div>
-                  <div className="flex justify-between text-xs mb-1">
+                  <div className="flex flex-wrap justify-between gap-x-2 gap-y-0.5 text-xs mb-1">
                     <span className="text-zinc-400">Month 3-4 (On-Page & Cluster Launch)</span>
-                    <span className="text-zinc-300 font-mono">8,500 sessions</span>
+                    <span className="text-zinc-300 font-mono shrink-0">8,500 sessions</span>
                   </div>
                   <div className="w-full bg-zinc-900 rounded-full h-2 overflow-hidden">
                     <div className="bg-zinc-500 h-full rounded-full" style={{ width: "60%" }}></div>
@@ -473,9 +473,9 @@ export default function SEODemoPage() {
                 </div>
 
                 <div>
-                  <div className="flex justify-between text-xs mb-1">
+                  <div className="flex flex-wrap justify-between gap-x-2 gap-y-0.5 text-xs mb-1">
                     <span className="text-emerald-400 font-medium">Month 5-6 (Top 6 Ranking Achieved)</span>
-                    <span className="text-emerald-400 font-mono font-bold">14,200 sessions (+45%)</span>
+                    <span className="text-emerald-400 font-mono font-bold shrink-0">14,200 sessions (+45%)</span>
                   </div>
                   <div className="w-full bg-zinc-900 rounded-full h-2 overflow-hidden">
                     <div className="bg-emerald-500 h-full rounded-full" style={{ width: "95%" }}></div>

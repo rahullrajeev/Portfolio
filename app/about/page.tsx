@@ -6,9 +6,11 @@ import { Reveal } from "@/components/ui/reveal";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -44,7 +46,7 @@ export default function About() {
         className="relative min-h-screen"
       >
         <motion.div
-          style={{ y: bgY, scale: bgScale }}
+          style={isMobile ? undefined : { y: bgY, scale: bgScale }}
           className="fixed inset-0 -z-10 h-full w-full pointer-events-none opacity-10 dark:opacity-[0.03] mix-blend-multiply dark:mix-blend-luminosity"
         >
           <Image
@@ -56,13 +58,13 @@ export default function About() {
             priority
           />
         </motion.div>
-        <section className="min-h-screen py-16 sm:py-24 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto relative z-10">
+        <section className="min-h-screen py-8 sm:py-12 md:py-24 px-5 sm:px-6 md:px-12 max-w-6xl mx-auto relative z-10">
           <motion.div
-            style={{ y: headerY }}
+            style={isMobile ? undefined : { y: headerY }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-10 sm:mb-16"
+            transition={{ duration: isMobile ? 0.45 : 0.8, delay: isMobile ? 0.08 : 0.2 }}
+            className="mb-8 sm:mb-12 md:mb-16"
           >
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-4 sm:mb-6">
               The <span className="text-zinc-600 dark:text-zinc-400">Journey</span>
@@ -94,10 +96,10 @@ export default function About() {
                      { year: "Prior", role: "B.Tech Computer Science", detail: "Core algorithmic foundations and system architecture." }
                    ].map((item, i) => (
                      <motion.div 
-                       initial={{ opacity: 0, x: -20 }}
-                       whileInView={{ opacity: 1, x: 0 }}
+                       initial={isMobile ? { opacity: 0, y: 12 } : { opacity: 0, x: -20 }}
+                       whileInView={{ opacity: 1, x: 0, y: 0 }}
                        viewport={{ once: true }}
-                       transition={{ delay: i * 0.2 }}
+                       transition={isMobile ? { delay: Math.min(i * 0.08, 0.16), duration: 0.3 } : { delay: i * 0.2 }}
                        key={item.year} 
                        className="relative"
                      >
@@ -114,13 +116,14 @@ export default function About() {
             <div className="col-span-4 md:col-span-8 lg:col-span-4 space-y-6 sm:space-y-8">
               <Reveal direction="up" delay={0.4}>
                  <motion.div
-                   style={{ y: photoY }}
-                   className="relative w-full max-w-[200px] sm:max-w-[240px] md:max-w-xs mx-auto aspect-[4/5] rounded-3xl overflow-hidden group"
+                   style={isMobile ? undefined : { y: photoY }}
+                   className="relative w-full max-w-[240px] sm:max-w-[260px] md:max-w-xs mx-auto aspect-[4/5] rounded-3xl overflow-hidden group"
                  >
                     <Image 
                       src="/portrait.jpeg"
                       alt="Rahul Rajeev"
                       fill
+                      sizes="(max-width: 767px) 260px, 320px"
                       className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out transform group-hover:scale-105"
                       referrerPolicy="no-referrer"
                     />
@@ -129,7 +132,7 @@ export default function About() {
 
               <Reveal direction="up" delay={0.5}>
                 <motion.div
-                  style={{ y: certsY }}
+                  style={isMobile ? undefined : { y: certsY }}
                   className="bg-zinc-900 text-zinc-50 p-6 sm:p-8 rounded-2xl"
                 >
                   <h3 className="font-display text-lg sm:text-xl font-bold tracking-wider mb-4 sm:mb-6">Certifications</h3>
@@ -150,7 +153,7 @@ export default function About() {
         {/* Mouse Scroll Indicator Cue */}
         <motion.div
           style={{ opacity: scrollCueOpacity }}
-          className="flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
+          className="hidden md:flex fixed bottom-3 left-1/2 -translate-x-1/2 flex-col items-center gap-1 z-20 pointer-events-none text-zinc-500 dark:text-zinc-400"
         >
           <div className="w-5 h-8 rounded-full border-2 border-zinc-400/60 dark:border-zinc-600/60 flex justify-center p-1">
             <motion.div

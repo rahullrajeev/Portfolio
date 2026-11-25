@@ -21,6 +21,9 @@ export function Magnetic({
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 767px), (pointer: coarse)").matches) {
+      return;
+    }
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
@@ -40,7 +43,7 @@ export function Magnetic({
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       style={{ x, y }}
-      className="inline-block"
+      className="inline-block max-w-full"
     >
       {children}
     </motion.div>
