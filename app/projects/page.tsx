@@ -2,11 +2,12 @@
 
 import { PageTransition } from "@/components/layout/page-transition";
 import { Grid } from "@/components/ui/grid";
+import { Reveal } from "@/components/ui/reveal";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
-import { TransitionLink as Link } from "@/components/ui/transition-link";
 import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { LazyIframe } from "@/components/ui/lazy-iframe";
 
 export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,9 +36,9 @@ export default function Projects() {
         <section className="min-h-screen py-8 sm:py-12 md:py-24 px-5 sm:px-6 md:px-12 max-w-6xl mx-auto relative z-10">
           <motion.div
              style={isMobile ? undefined : { y: headerY }}
-             initial={{ opacity: 0, y: 20 }}
+             initial={{ opacity: 0, y: isMobile ? 26 : 30 }}
              animate={{ opacity: 1, y: 0 }}
-             transition={{ duration: isMobile ? 0.45 : 0.8 }}
+             transition={{ duration: isMobile ? 0.72 : 0.8, ease: [0.22, 1, 0.36, 1] }}
              className="mb-8 sm:mb-12 md:mb-16"
           >
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-4 sm:mb-6">
@@ -54,82 +55,95 @@ export default function Projects() {
               <motion.div 
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
+                transition={{ delay: 0.12, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl rotate-3 mb-4 sm:mb-6 shadow-2xl flex items-center justify-center font-bold text-xl sm:text-2xl"
               >
                 M
               </motion.div>
-              <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold tracking-tighter mb-3 sm:mb-4">
-                ModuSpark AI
-              </h2>
-              <p className="text-sm sm:text-lg md:text-xl font-light opacity-80 max-w-2xl font-sans">
-                AI-powered component generation platform converting natural-language prompts into production-ready React + Tailwind CSS code.
-              </p>
+              <Reveal direction="up" delay={0.14}>
+                <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold tracking-tighter mb-3 sm:mb-4">
+                  ModuSpark AI
+                </h2>
+              </Reveal>
+              <Reveal direction="up" delay={0.26}>
+                <p className="text-sm sm:text-lg md:text-xl font-light opacity-80 max-w-2xl mx-auto font-sans">
+                  AI-powered component generation platform converting natural-language prompts into production-ready React + Tailwind CSS code.
+                </p>
+              </Reveal>
             </div>
             
             <Grid className="gap-y-px gap-x-px bg-zinc-200 dark:bg-zinc-800">
                <div className="col-span-4 md:col-span-8 lg:col-span-6 bg-white dark:bg-zinc-950 p-6 sm:p-8 md:p-12 transition-all duration-300 ease-out z-0 lg:hover:z-20 lg:hover:-translate-y-2 lg:hover:-translate-x-2 lg:hover:shadow-[8px_8px_0px_#18181b] dark:lg:hover:shadow-[8px_8px_0px_#fafafa] border-2 border-transparent lg:hover:border-zinc-900 dark:lg:hover:border-zinc-50 outline outline-1 outline-transparent text-zinc-900 dark:text-zinc-50 relative group cursor-default">
-                  <h3 className="font-display text-xs font-bold tracking-widest text-zinc-700 dark:text-zinc-400 mb-4 sm:mb-8">System Architecture</h3>
-                  <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm md:text-base font-light text-zinc-800 dark:text-zinc-300 leading-relaxed">
-                    <p>
-                      Built on a modern React and Tailwind CSS stack, integrating the <strong>Google Gemini API</strong> for intelligent code synthesis and <strong>Monaco Editor</strong> for a robust live coding environment, complete with instantaneous live preview rendering.
-                    </p>
-                    <p>
-                      Features multi-theme support, direct copy/download capabilities, and responsive component scaffolding designed for immediate production use.
-                    </p>
-                  </div>
+                  <Reveal direction="up" delay={0.08}>
+                    <h3 className="font-display text-xs font-bold tracking-widest text-zinc-700 dark:text-zinc-400 mb-4 sm:mb-8">System Architecture</h3>
+                    <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm md:text-base font-light text-zinc-800 dark:text-zinc-300 leading-relaxed">
+                      <p>
+                        Built on a modern React and Tailwind CSS stack, integrating the <strong>Google Gemini API</strong> for intelligent code synthesis and <strong>Monaco Editor</strong> for a robust live coding environment, complete with instantaneous live preview rendering.
+                      </p>
+                      <p>
+                        Features multi-theme support, direct copy/download capabilities, and responsive component scaffolding designed for immediate production use.
+                      </p>
+                    </div>
+                  </Reveal>
                   
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-6 sm:mt-8">
-                    {['React', 'Tailwind CSS', 'Google Gemini API', 'Monaco Editor', 'Vercel', 'TypeScript'].map(tech => (
-                      <span key={tech} className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-300 text-[11px] sm:text-xs font-semibold rounded-md border border-zinc-200 dark:border-zinc-800">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                  <Reveal direction="up" delay={0.2}>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-6 sm:mt-8">
+                      {['React', 'Tailwind CSS', 'Google Gemini API', 'Monaco Editor', 'Vercel', 'TypeScript'].map(tech => (
+                        <span key={tech} className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-300 text-[11px] sm:text-xs font-semibold rounded-md border border-zinc-200 dark:border-zinc-800">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </Reveal>
                </div>
 
                <div className="col-span-4 md:col-span-8 lg:col-span-6 bg-zinc-50 dark:bg-zinc-900 p-6 sm:p-8 md:p-12 flex flex-col justify-center items-start transition-all duration-300 ease-out z-0 lg:hover:z-20 lg:hover:-translate-y-2 lg:hover:-translate-x-2 lg:hover:shadow-[8px_8px_0px_#18181b] dark:lg:hover:shadow-[8px_8px_0px_#fafafa] border-2 border-transparent relative">
-                 <h3 className="font-display text-xs font-bold tracking-widest text-zinc-700 dark:text-zinc-400 mb-4 sm:mb-8">Access Points</h3>
+                 <Reveal direction="up" delay={0.12}>
+                   <h3 className="font-display text-xs font-bold tracking-widest text-zinc-700 dark:text-zinc-400 mb-4 sm:mb-8">Access Points</h3>
+                 </Reveal>
                  
-                 <div className="flex flex-col w-full gap-3 sm:gap-4">
-                     <a 
-                       href="https://moduspark-ai-component-studio.vercel.app/" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       className="group flex items-center justify-between p-4 sm:p-6 min-h-[52px] md:min-h-0 bg-black dark:bg-zinc-50 text-white dark:text-zinc-900 border-2 border-black dark:border-zinc-50 rounded-xl transition-all duration-200 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-none active:scale-[0.99] md:active:scale-100 text-xs sm:text-sm"
-                     >
-                       <span className="font-bold tracking-wide">Live Platform Demo</span>
-                       <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
-                     </a>
-                     
-                     <a 
-                       href="https://github.com/rahullrajeev/ModuSpark-Ai-Component-Studio" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       className="group flex items-center justify-between p-4 sm:p-6 min-h-[52px] md:min-h-0 bg-white dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 rounded-xl transition-all duration-200 hover:border-zinc-500 dark:hover:border-zinc-400 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[4px_4px_0px_#18181b] dark:hover:shadow-[4px_4px_0px_#fafafa] active:translate-y-0 active:translate-x-0 active:shadow-none active:scale-[0.99] md:active:scale-100 text-xs sm:text-sm"
-                     >
-                       <span className="font-bold tracking-wide flex items-center gap-2 sm:gap-3">
-                         <Github className="w-4 h-4 sm:w-5 sm:h-5" /> Source Code
-                       </span>
-                       <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
-                     </a>
+                 <Reveal direction="up" delay={0.24}>
+                   <div className="flex flex-col w-full gap-3 sm:gap-4">
+                       <a 
+                         href="https://moduspark-ai-component-studio.vercel.app/" 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="btn-slide btn-slide-solid group flex items-center justify-between p-4 sm:p-6 min-h-[52px] md:min-h-0 bg-black dark:bg-zinc-50 text-white dark:text-zinc-900 border-2 border-black dark:border-zinc-50 rounded-xl text-xs sm:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700"
+                       >
+                         <span className="font-bold tracking-wide">Live Platform Demo</span>
+                         <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
+                       </a>
+                       
+                       <a 
+                         href="https://github.com/rahullrajeev/ModuSpark-Ai-Component-Studio" 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="btn-slide btn-slide-outline group flex items-center justify-between p-4 sm:p-6 min-h-[52px] md:min-h-0 bg-white dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 rounded-xl text-xs sm:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700"
+                       >
+                         <span className="font-bold tracking-wide flex items-center gap-2 sm:gap-3">
+                           <Github className="w-4 h-4 sm:w-5 sm:h-5" /> Source Code
+                         </span>
+                         <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
+                       </a>
                    </div>
-                 </div>
+                 </Reveal>
+               </div>
               </Grid>
               
               <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-zinc-950/80">
-                <motion.div
-                  style={isMobile ? undefined : { scale: iframeScale }}
-                  className="w-full bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden relative shadow-inner flex items-center justify-center p-1 sm:p-2 h-[380px] sm:h-[450px] md:h-[60vh] md:min-h-[500px]"
-                >
-                  <iframe 
-                    src="https://moduspark-ai-component-studio.vercel.app/" 
-                    title="ModuSpark AI Component Studio"
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full border-none rounded-xl"
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-                  />
-              </motion.div>
+                <Reveal direction="up" delay={0.14}>
+                  <motion.div
+                    style={isMobile ? undefined : { scale: iframeScale }}
+                    className="w-full bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden relative shadow-inner flex items-center justify-center p-1 sm:p-2 h-[380px] sm:h-[450px] md:h-[60vh] md:min-h-[500px]"
+                  >
+                    <LazyIframe
+                      src="https://moduspark-ai-component-studio.vercel.app/"
+                      title="ModuSpark AI Component Studio"
+                      className="absolute inset-0 w-full h-full border-none rounded-xl"
+                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+                    />
+                  </motion.div>
+                </Reveal>
             </div>
           </motion.div>
         </section>

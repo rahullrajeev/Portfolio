@@ -53,17 +53,18 @@ export default function About() {
             src="/IMG_0571.JPG.jpeg"
             alt="Minimal nature background"
             fill
+            quality={100}
             sizes="100vw"
+            referrerPolicy="no-referrer"
             className="object-cover object-center grayscale"
-            priority
           />
         </motion.div>
         <section className="min-h-screen py-8 sm:py-12 md:py-24 px-5 sm:px-6 md:px-12 max-w-6xl mx-auto relative z-10">
           <motion.div
             style={isMobile ? undefined : { y: headerY }}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: isMobile ? 26 : 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: isMobile ? 0.45 : 0.8, delay: isMobile ? 0.08 : 0.2 }}
+            transition={{ duration: isMobile ? 0.72 : 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="mb-8 sm:mb-12 md:mb-16"
           >
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-4 sm:mb-6">
@@ -76,19 +77,23 @@ export default function About() {
 
           <Grid>
             <div className="col-span-4 md:col-span-8 lg:col-span-8 flex flex-col gap-8 sm:gap-12">
-              <Reveal direction="up" delay={0.3}>
-                <div className="space-y-4 sm:space-y-6 text-sm sm:text-base font-light font-display leading-relaxed text-zinc-800 dark:text-zinc-300">
+              <div className="space-y-4 sm:space-y-6 text-sm sm:text-base font-light font-display leading-relaxed text-zinc-800 dark:text-zinc-300">
+                <Reveal direction="up" delay={0.1}>
                   <p>
                     My foundation lies in Computer Science Engineering, where I cultivated a rigorous understanding of logic and architecture. However, my curiosity led me into the dynamic realm of Digital Marketing and SEO, merging technical precision with strategic visibility.
                   </p>
+                </Reveal>
+                <Reveal direction="up" delay={0.22}>
                   <p>
                     Today, I bridge the gap between discovery and interaction. I am deeply passionate about Generative AI and Frontend Development, building intuitive interfaces that leverage large language models to solve real-world problems.
                   </p>
-                </div>
-              </Reveal>
+                </Reveal>
+              </div>
 
               <div className="space-y-6 sm:space-y-8">
-                 <h3 className="font-display text-xl sm:text-2xl font-bold tracking-tight pb-3 sm:pb-4 border-b border-zinc-200 dark:border-zinc-800">Education & Milestones</h3>
+                 <Reveal direction="up" delay={0}>
+                   <h3 className="font-display text-xl sm:text-2xl font-bold tracking-tight pb-3 sm:pb-4 border-b border-zinc-200 dark:border-zinc-800">Education & Milestones</h3>
+                 </Reveal>
                  <div className="relative pl-6 sm:pl-8 border-l-2 border-zinc-200 dark:border-zinc-800 space-y-8 sm:space-y-12">
                    {[
                      { year: "Present", role: "Generative AI Developer & Web Developer", detail: "Developing SaaS tools, AI-driven platforms like ModuSpark, and modern responsive websites." },
@@ -96,10 +101,14 @@ export default function About() {
                      { year: "Prior", role: "B.Tech Computer Science", detail: "Core algorithmic foundations and system architecture." }
                    ].map((item, i) => (
                      <motion.div 
-                       initial={isMobile ? { opacity: 0, y: 12 } : { opacity: 0, x: -20 }}
-                       whileInView={{ opacity: 1, x: 0, y: 0 }}
-                       viewport={{ once: true }}
-                       transition={isMobile ? { delay: Math.min(i * 0.08, 0.16), duration: 0.3 } : { delay: i * 0.2 }}
+                       initial={{ opacity: 0, y: isMobile ? 26 : 30 }}
+                       whileInView={{ opacity: 1, y: 0 }}
+                       viewport={{ once: true, margin: isMobile ? "-4% 0px" : "-8% 0px" }}
+                       transition={{
+                         duration: isMobile ? 0.72 : 0.8,
+                         delay: i * 0.12,
+                         ease: [0.22, 1, 0.36, 1],
+                       }}
                        key={item.year} 
                        className="relative"
                      >
@@ -114,23 +123,24 @@ export default function About() {
             </div>
 
             <div className="col-span-4 md:col-span-8 lg:col-span-4 space-y-6 sm:space-y-8">
-              <Reveal direction="up" delay={0.4}>
+              <Reveal direction="up" delay={0.12}>
                  <motion.div
                    style={isMobile ? undefined : { y: photoY }}
-                   className="relative w-full max-w-[240px] sm:max-w-[260px] md:max-w-xs mx-auto aspect-[4/5] rounded-3xl overflow-hidden group"
+                   className="relative w-full max-w-[240px] sm:max-w-[260px] md:max-w-xs mx-auto aspect-[4/5] rounded-3xl overflow-hidden img-zoom-card group"
                  >
                     <Image 
                       src="/portrait.jpeg"
                       alt="Rahul Rajeev"
                       fill
+                      quality={100}
                       sizes="(max-width: 767px) 260px, 320px"
-                      className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out transform group-hover:scale-105"
+                      className="object-cover grayscale hover:grayscale-0 img-zoom-target"
                       referrerPolicy="no-referrer"
                     />
                  </motion.div>
               </Reveal>
 
-              <Reveal direction="up" delay={0.5}>
+              <Reveal direction="up" delay={0.24}>
                 <motion.div
                   style={isMobile ? undefined : { y: certsY }}
                   className="bg-zinc-900 text-zinc-50 p-6 sm:p-8 rounded-2xl"

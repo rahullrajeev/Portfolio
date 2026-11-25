@@ -1,6 +1,7 @@
 "use client";
 
 import { PageTransition } from "@/components/layout/page-transition";
+import { Reveal } from "@/components/ui/reveal";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import { useState, useRef } from "react";
 import Image from "next/image";
@@ -34,13 +35,13 @@ export default function Resume() {
       <div ref={containerRef} className="relative min-h-screen">
         <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none opacity-20 dark:opacity-10 mix-blend-luminosity">
           <Image
-            src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=2564&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=100&w=2564&auto=format&fit=crop"
             alt="Minimal subtle background"
             fill
+            quality={100}
             sizes="100vw"
             className="object-cover object-center grayscale"
             referrerPolicy="no-referrer"
-            priority
           />
         </div>
         <section className="min-h-screen py-8 sm:py-12 md:py-24 px-4 sm:px-6 md:px-12 max-w-5xl mx-auto flex flex-col relative z-10">
@@ -49,8 +50,9 @@ export default function Resume() {
             className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 sm:mb-8 md:mb-12 gap-5 md:gap-8"
           >
             <motion.div
-               initial={{ opacity: 0, y: 20 }}
+               initial={{ opacity: 0, y: isMobile ? 26 : 30 }}
                animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: isMobile ? 0.72 : 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-display font-bold tracking-tighter leading-[0.9]">
                 Curriculum <br/> <span className="text-zinc-600 dark:text-zinc-400">Vitae</span>
@@ -58,8 +60,9 @@ export default function Resume() {
             </motion.div>
             
             <motion.div 
-               initial={{ opacity: 0, y: 20 }}
+               initial={{ opacity: 0, y: isMobile ? 26 : 30 }}
                animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: isMobile ? 0.72 : 0.8, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
                className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-800 rounded-full w-full sm:w-auto"
             >
                <button
@@ -79,9 +82,9 @@ export default function Resume() {
 
           <motion.div 
             style={isMobile ? undefined : { y: resumeCardY }}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: isMobile ? 26 : 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: isMobile ? 0.08 : 0.2 }}
+            transition={{ duration: isMobile ? 0.72 : 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="w-full h-auto md:h-[60vh] md:min-h-[800px] bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm relative flex items-center justify-center p-1 sm:p-2"
           >
              <div className="w-full h-full bg-white dark:bg-zinc-900 rounded-xl sm:rounded-2xl overflow-hidden">
@@ -98,7 +101,7 @@ export default function Resume() {
                             href="/Rahul.ai.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-3 md:mt-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[44px] md:min-h-0 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+                            className="btn-slide btn-slide-solid mt-3 md:mt-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[44px] md:min-h-0 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border border-zinc-900 dark:border-white rounded-lg text-xs sm:text-sm font-medium cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-600"
                           >
                             <Eye size={16} />
                             <span>View Resume</span>
@@ -114,34 +117,42 @@ export default function Resume() {
                        </div>
                      </header>
 
-                     <section className="mb-10">
-                       <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Professional Summary</h3>
-                       <p className="font-light leading-relaxed text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
-                         Results-driven and innovative Full-Stack AI Developer with a B.Tech in Computer Science Engineering, specializing in AI-powered web application development and Generative AI solutions. Skilled in modern web technologies, AI integration, AI-assisted development workflows, responsive UI design, and full-stack application development. Experienced in building intelligent, user-focused digital products with a strong emphasis on performance, scalability, and seamless user experiences. Passionate about leveraging AI and modern software engineering practices to create impactful products and innovative software solutions.
-                       </p>
-                     </section>
+                     <Reveal direction="up" delay={0.08}>
+                       <section className="mb-10">
+                         <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Professional Summary</h3>
+                         <p className="font-light leading-relaxed text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
+                           Results-driven and innovative Full-Stack AI Developer with a B.Tech in Computer Science Engineering, specializing in AI-powered web application development and Generative AI solutions. Skilled in modern web technologies, AI integration, AI-assisted development workflows, responsive UI design, and full-stack application development. Experienced in building intelligent, user-focused digital products with a strong emphasis on performance, scalability, and seamless user experiences. Passionate about leveraging AI and modern software engineering practices to create impactful products and innovative software solutions.
+                         </p>
+                       </section>
+                     </Reveal>
+
+                     <Reveal direction="up" delay={0.14}>
+                       <section className="mb-10">
+                         <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Technical Skills</h3>
+                         <ul className="space-y-3 font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
+                           <li><strong className="font-semibold text-black dark:text-white">Programming Languages:</strong> TypeScript, JavaScript, Python</li>
+                           <li><strong className="font-semibold text-black dark:text-white">Frontend:</strong> React, Next.js, Tailwind CSS, HTML, CSS</li>
+                           <li><strong className="font-semibold text-black dark:text-white">Backend:</strong> FastAPI, Node.js</li>
+                           <li><strong className="font-semibold text-black dark:text-white">AI/ML:</strong> Google Gemini AI, Generative AI, Prompt Engineering, Embeddings, RAG (Retrieval-Augmented Generation)</li>
+                           <li><strong className="font-semibold text-black dark:text-white">Tools & Platforms:</strong> Git, GitHub, Docker, Monaco Editor, Sandpack, Vercel, LangChain, LangGraph, Cursor</li>
+                           <li><strong className="font-semibold text-black dark:text-white">Concepts:</strong> Generative API Development, UI/UX Design, Responsive Design, Component-Based Architecture, State Management, System Design, Microservices</li>
+                         </ul>
+                       </section>
+                     </Reveal>
+
+                     <Reveal direction="up" delay={0.12}>
+                       <section className="mb-10">
+                         <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Education</h3>
+                         <div className="font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
+                           <p><strong className="font-semibold text-black dark:text-white">B.Tech in Computer Science Engineering:</strong> SNGIST Group of Institutions, Ernakulam</p>
+                         </div>
+                       </section>
+                     </Reveal>
 
                      <section className="mb-10">
-                       <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Technical Skills</h3>
-                       <ul className="space-y-3 font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
-                         <li><strong className="font-semibold text-black dark:text-white">Programming Languages:</strong> TypeScript, JavaScript, Python</li>
-                         <li><strong className="font-semibold text-black dark:text-white">Frontend:</strong> React, Next.js, Tailwind CSS, HTML, CSS</li>
-                         <li><strong className="font-semibold text-black dark:text-white">Backend:</strong> FastAPI, Node.js</li>
-                         <li><strong className="font-semibold text-black dark:text-white">AI/ML:</strong> Google Gemini AI, Generative AI, Prompt Engineering, Embeddings, RAG (Retrieval-Augmented Generation)</li>
-                         <li><strong className="font-semibold text-black dark:text-white">Tools & Platforms:</strong> Git, GitHub, Docker, Monaco Editor, Sandpack, Vercel, LangChain, LangGraph, Cursor</li>
-                         <li><strong className="font-semibold text-black dark:text-white">Concepts:</strong> Generative API Development, UI/UX Design, Responsive Design, Component-Based Architecture, State Management, System Design, Microservices</li>
-                       </ul>
-                     </section>
-
-                     <section className="mb-10">
-                       <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Education</h3>
-                       <div className="font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
-                         <p><strong className="font-semibold text-black dark:text-white">B.Tech in Computer Science Engineering:</strong> SNGIST Group of Institutions, Ernakulam</p>
-                       </div>
-                     </section>
-
-                     <section className="mb-10">
-                       <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-6 text-zinc-400 font-display">Projects</h3>
+                       <Reveal direction="up" delay={0.08}>
+                         <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-6 text-zinc-400 font-display">Projects</h3>
+                       </Reveal>
                       
                       <div className="mb-10">
                         <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2 gap-2">
@@ -202,7 +213,7 @@ export default function Resume() {
                             href="/RahulSeo.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-3 md:mt-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[44px] md:min-h-0 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+                            className="btn-slide btn-slide-solid mt-3 md:mt-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[44px] md:min-h-0 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border border-zinc-900 dark:border-white rounded-lg text-xs sm:text-sm font-medium cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-600"
                           >
                             <Eye size={16} />
                             <span>View Resume</span>
@@ -217,25 +228,31 @@ export default function Resume() {
                        </div>
                      </header>
 
-                     <section className="mb-10">
-                       <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Professional Summary</h3>
-                       <p className="font-light leading-relaxed text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
-                         Results-driven SEO Specialist with hands-on experience in Technical SEO, On-Page SEO, Off-Page SEO, Local SEO, and AI Search Optimisation (AEO & GEO). Successfully improved the Google ranking of the competitive keyword “Best Study Abroad Consultants in Kochi” from Page 2/3 to Page 1 (Top 6 positions) within six months through strategic SEO implementation. Experienced in improving organic search visibility, website performance, and lead generation using Google Analytics 4, Google Search Console, SEMrush, WordPress, Google Ads, and Meta Ads. Strong technical background with a Bachelor of Technology in Computer Science Engineering.
-                       </p>
-                     </section>
+                     <Reveal direction="up" delay={0.08}>
+                       <section className="mb-10">
+                         <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Professional Summary</h3>
+                         <p className="font-light leading-relaxed text-zinc-800 dark:text-zinc-300 text-sm md:text-base">
+                           Results-driven SEO Specialist with hands-on experience in Technical SEO, On-Page SEO, Off-Page SEO, Local SEO, and AI Search Optimisation (AEO & GEO). Successfully improved the Google ranking of the competitive keyword “Best Study Abroad Consultants in Kochi” from Page 2/3 to Page 1 (Top 6 positions) within six months through strategic SEO implementation. Experienced in improving organic search visibility, website performance, and lead generation using Google Analytics 4, Google Search Console, SEMrush, WordPress, Google Ads, and Meta Ads. Strong technical background with a Bachelor of Technology in Computer Science Engineering.
+                         </p>
+                       </section>
+                     </Reveal>
+
+                     <Reveal direction="up" delay={0.14}>
+                       <section className="mb-10">
+                         <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Skills</h3>
+                         <div className="space-y-4 font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
+                           <p><strong className="font-semibold text-black dark:text-white">SEO:</strong> Technical SEO, On-Page SEO, Off-Page SEO, Local SEO, Keyword Research & Clustering, Competitor & SERP Analysis, Content Optimisation, Link Building, Schema Markup, XML Sitemap, Robots.txt, Core Web Vitals, AEO, GEO</p>
+                           <p><strong className="font-semibold text-black dark:text-white">Analytics & Tools:</strong> Google Analytics 4 (GA4), Google Search Console, SEMrush, Google Keyword Planner, Google Trends, PageSpeed Insights, Microsoft Clarity, Ahrefs, Screaming Frog, Google Tag Manager, Yoast</p>
+                           <p><strong className="font-semibold text-black dark:text-white">Digital Marketing:</strong> WordPress, Landing Page Optimisation, Google Ads, Meta Ads, Social Media Marketing, Canva</p>
+                           <p><strong className="font-semibold text-black dark:text-white">AI Tools:</strong> ChatGPT, Claude, Gemini, Manus AI</p>
+                         </div>
+                       </section>
+                     </Reveal>
 
                      <section className="mb-10">
-                       <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-4 text-zinc-400 font-display">Skills</h3>
-                       <div className="space-y-4 font-light text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
-                         <p><strong className="font-semibold text-black dark:text-white">SEO:</strong> Technical SEO, On-Page SEO, Off-Page SEO, Local SEO, Keyword Research & Clustering, Competitor & SERP Analysis, Content Optimisation, Link Building, Schema Markup, XML Sitemap, Robots.txt, Core Web Vitals, AEO, GEO</p>
-                         <p><strong className="font-semibold text-black dark:text-white">Analytics & Tools:</strong> Google Analytics 4 (GA4), Google Search Console, SEMrush, Google Keyword Planner, Google Trends, PageSpeed Insights, Microsoft Clarity, Ahrefs, Screaming Frog, Google Tag Manager, Yoast</p>
-                         <p><strong className="font-semibold text-black dark:text-white">Digital Marketing:</strong> WordPress, Landing Page Optimisation, Google Ads, Meta Ads, Social Media Marketing, Canva</p>
-                         <p><strong className="font-semibold text-black dark:text-white">AI Tools:</strong> ChatGPT, Claude, Gemini, Manus AI</p>
-                       </div>
-                     </section>
-
-                     <section className="mb-10">
-                       <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-6 text-zinc-400 font-display">Professional Experience</h3>
+                       <Reveal direction="up" delay={0.08}>
+                         <h3 className="font-display text-sm font-bold tracking-[0.2em] mb-6 text-zinc-400 font-display">Professional Experience</h3>
+                       </Reveal>
                        
                        <div className="mb-8">
                          <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2 gap-2">

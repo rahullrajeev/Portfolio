@@ -18,7 +18,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-11 h-11 md:w-8 md:h-8 rounded-full flex items-center justify-center relative z-50">
+      <div className="w-10 h-10 md:w-8 md:h-8 rounded-full flex items-center justify-center relative z-50">
       </div>
     );
   }
@@ -28,7 +28,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="p-2 w-11 h-11 md:w-10 md:h-10 rounded-full flex items-center justify-center relative cursor-pointer md:cursor-none hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50 transition-colors pointer-events-auto"
+      className="p-2 w-10 h-10 rounded-full flex items-center justify-center relative cursor-pointer lg:cursor-none hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50 transition-colors pointer-events-auto"
       aria-label="Toggle Dark Mode"
     >
       <div className="relative w-5 h-5 flex items-center justify-center">

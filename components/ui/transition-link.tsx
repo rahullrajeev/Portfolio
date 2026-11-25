@@ -17,6 +17,7 @@ export function TransitionLink({
   className,
   onClick,
   onMouseEnter,
+  onTouchStart,
   ...props
 }: TransitionLinkProps) {
   const router = useRouter();
@@ -24,15 +25,23 @@ export function TransitionLink({
 
   const targetUrl = href.toString();
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (onMouseEnter) onMouseEnter(e);
+  const prefetchTarget = () => {
     if (targetUrl && targetUrl.startsWith("/") && targetUrl !== pathname) {
       router.prefetch(targetUrl);
     }
   };
 
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (onMouseEnter) onMouseEnter(e);
+    prefetchTarget();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLAnchorElement>) => {
+    if (onTouchStart) onTouchStart(e);
+    prefetchTarget();
+  };
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Standard link behavior for modifier keys or external links
     if (
       e.metaKey ||
       e.ctrlKey ||
@@ -53,33 +62,36 @@ export function TransitionLink({
       return;
     }
 
-    // Prevent double clicks if a transition is already running
+    // Instant navigation for reduced-motion users
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      router.push(targetUrl);
+      return;
+    }
+
     if (document.body.dataset.transitioning === "true") {
       return;
     }
 
-    // Set transition state
     document.body.dataset.transitioning = "true";
 
-    // Safety fallback to prevent UI locks if navigation is delayed or cancelled
-    setTimeout(() => {
+    window.setTimeout(() => {
       document.body.dataset.transitioning = "false";
-    }, 2500);
+    }, 1800);
 
-    // Prefetch immediately on click
     router.prefetch(targetUrl);
 
-    // Trigger transition event to start shutter sweep
     window.dispatchEvent(
       new CustomEvent("page-transition-start", {
         detail: { targetUrl },
       })
     );
 
-    // Push route with a tiny delay to ensure animation frame starts cleanly
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       router.push(targetUrl, { scroll: false });
-    }, 50);
+    });
   };
 
   return (
@@ -88,6 +100,7 @@ export function TransitionLink({
       className={className}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
+      onTouchStart={handleTouchStart}
       {...props}
     >
       {children}

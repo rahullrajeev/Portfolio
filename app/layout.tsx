@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Space_Mono } from "next/font/google";
+import { Space_Mono } from "next/font/google";
 import './globals.css';
 import { Navigation } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
@@ -10,18 +10,12 @@ import { TransitionProvider } from "@/components/layout/transition-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { HapticFeedback } from "@/components/ui/haptic-feedback";
 
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-serif',
-  display: 'swap',
-  style: ['normal', 'italic']
-});
-
 const spaceMono = Space_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
   weight: ['400', '700'],
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -47,7 +41,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en" className={`${playfair.variable} ${spaceMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={spaceMono.variable} suppressHydrationWarning>
       <body className="antialiased bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <SmoothScroll>

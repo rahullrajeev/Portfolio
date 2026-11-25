@@ -2,7 +2,7 @@
 
 import { TransitionLink as Link } from "@/components/ui/transition-link";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
@@ -22,15 +22,16 @@ export function Navigation() {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const hiddenRef = useRef(false);
   const { scrollY } = useScroll();
   const pathname = usePathname();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
-    if (latest > previous && latest > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
+    const shouldHide = latest > previous && latest > 150;
+    if (shouldHide !== hiddenRef.current) {
+      hiddenRef.current = shouldHide;
+      setHidden(shouldHide);
     }
   });
 
@@ -59,13 +60,15 @@ export function Navigation() {
         }}
         animate={hidden && !menuOpen ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 left-0 z-50 px-4 py-3 md:px-6 md:py-6 pointer-events-auto"
+        className={`fixed top-0 left-0 z-50 px-4 py-3 md:px-6 md:py-5 lg:py-6 pointer-events-auto ${
+          menuOpen ? "" : "mix-blend-difference"
+        }`}
       >
         <Link
           href="/"
           onClick={() => setMenuOpen(false)}
-          className={`inline-flex items-center min-h-[44px] md:min-h-0 text-2xl md:text-3xl font-bold tracking-tighter lowercase transition-colors ${
-            menuOpen ? "text-zinc-50 md:text-[#3c4a30] md:dark:text-zinc-50" : "text-[#3c4a30] dark:text-zinc-50"
+          className={`inline-flex items-center min-h-[46px] md:min-h-0 text-2xl md:text-[26px] lg:text-3xl font-bold tracking-tighter lowercase transition-colors ${
+            menuOpen ? "text-zinc-50" : "text-white"
           }`}
         >
           rr.
@@ -79,11 +82,11 @@ export function Navigation() {
         }}
         animate={hidden && !menuOpen ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-end px-4 py-3 md:px-6 md:py-6 pointer-events-none md:mix-blend-difference text-[#3c4a30] dark:text-zinc-50 md:text-white"
+        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-end md:gap-2 lg:gap-0 px-4 py-3 md:px-6 md:pt-2.5 md:pb-4 lg:pt-3 lg:pb-5 pointer-events-none md:mix-blend-difference text-[#3c4a30] dark:text-zinc-50 md:text-white"
       >
-        {/* Desktop Nav */}
+        {/* Desktop & Tablet Nav */}
         <ul 
-          className="hidden md:flex items-center gap-1 lowercase text-xs sm:text-sm font-medium tracking-wide pointer-events-auto p-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl shadow-black/10"
+          className="hidden md:flex items-center gap-0.5 lg:gap-1 lowercase text-xs lg:text-sm font-medium tracking-wide pointer-events-auto p-1 lg:px-1.5 lg:py-1 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl shadow-black/10"
           onMouseLeave={() => setHoveredIndex(null)}
         >
           {links.map((link, idx) => {
@@ -95,7 +98,7 @@ export function Navigation() {
                 onMouseEnter={() => setHoveredIndex(idx)}
               >
                 <Magnetic strength={10}>
-                  <Link href={link.href} className={`relative z-10 block px-4.5 py-2 transition-opacity duration-200 ${isActive ? "opacity-100 font-semibold" : "opacity-75 hover:opacity-100"}`}>
+                  <Link href={link.href} className={`relative z-10 block px-3 lg:px-4.5 py-2 whitespace-nowrap transition-opacity duration-200 ${isActive ? "opacity-100 font-semibold" : "opacity-75 hover:opacity-100"}`}>
                     <span className="flex items-center gap-1.5">
                       {link.label}
                       {isActive && (
@@ -138,7 +141,7 @@ export function Navigation() {
 
         {/* Mobile Toggle & Theme */}
         <div
-          className={`flex items-center gap-1.5 md:gap-4 pointer-events-auto z-50 rounded-full px-1.5 py-0.5 md:p-0 md:rounded-none md:bg-transparent md:border-0 md:backdrop-blur-none transition-colors ${
+          className={`flex items-center gap-1 md:gap-4 pointer-events-auto z-50 rounded-full px-1.5 py-0.5 md:p-0 md:rounded-none md:bg-transparent md:border-0 md:backdrop-blur-none transition-colors ${
             menuOpen
               ? "text-zinc-50 bg-transparent border-transparent"
               : "bg-zinc-50/75 dark:bg-zinc-950/75 backdrop-blur-md border border-zinc-900/10 dark:border-zinc-50/15"
@@ -146,12 +149,12 @@ export function Navigation() {
         >
           <ThemeToggle />
           <button 
-            className="md:hidden relative w-11 h-11 flex items-center justify-center rounded-full active:scale-95 transition-transform"
+            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-full active:scale-95 transition-transform"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            {menuOpen ? <X size={21} /> : <Menu size={21} />}
           </button>
         </div>
       </motion.nav>

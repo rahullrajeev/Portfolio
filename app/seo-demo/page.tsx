@@ -209,6 +209,8 @@ export default function SEODemoPage() {
                         alt="Google SERP proof for best study abroad consultants in kochi"
                         width={841}
                         height={1870}
+                        sizes="(max-width: 767px) 100vw, 50vw"
+                        quality={100}
                         className="w-full min-w-0 h-auto object-top rounded-lg shadow-xl"
                         priority
                         referrerPolicy="no-referrer"
@@ -231,8 +233,9 @@ export default function SEODemoPage() {
                         alt="Google AI Overview proof for Vidhyarthi Mithram"
                         width={841}
                         height={1870}
+                        sizes="(max-width: 767px) 100vw, 50vw"
+                        quality={100}
                         className="w-full min-w-0 h-auto object-top rounded-lg shadow-xl"
-                        priority
                         referrerPolicy="no-referrer"
                       />
                     </div>
