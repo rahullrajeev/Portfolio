@@ -102,30 +102,28 @@ export function HomeHero() {
           {imageError ? (
             <div className="w-full h-full bg-zinc-200 dark:bg-zinc-900" />
           ) : (
-            <div className="relative w-full h-full overflow-hidden">
-              <picture className="block relative w-full h-full hero-cinematic-pan">
-                <source
-                  media="(min-width: 1024px)"
-                  srcSet={desktopSrcSet}
-                  sizes="100vw"
-                />
-                <source
-                  media="(max-width: 1023px)"
-                  srcSet={mobileTabletSrcSet}
-                  sizes="100vw"
-                />
-                <img
-                  {...fallbackImgProps}
-                  alt="Rahul Rajeev"
-                  fetchPriority="high"
-                  loading="eager"
-                  decoding="sync"
-                  referrerPolicy="no-referrer"
-                  onError={() => setImageError(true)}
-                  className="w-full h-full object-cover object-[52%_14%] sm:object-[50%_14%] md:object-[50%_14%] lg:object-[62%_12%] xl:object-[58%_14%] 2xl:object-[54%_15%]"
-                />
-              </picture>
-            </div>
+            <picture className="block relative w-full h-full">
+              <source
+                media="(min-width: 1024px)"
+                srcSet={desktopSrcSet}
+                sizes="100vw"
+              />
+              <source
+                media="(max-width: 1023px)"
+                srcSet={mobileTabletSrcSet}
+                sizes="100vw"
+              />
+              <img
+                {...fallbackImgProps}
+                alt="Rahul Rajeev"
+                fetchPriority="high"
+                loading="eager"
+                decoding="sync"
+                referrerPolicy="no-referrer"
+                onError={() => setImageError(true)}
+                className="w-full h-full object-cover object-[52%_14%] sm:object-[50%_14%] md:object-[50%_14%] lg:object-[62%_12%] xl:object-[58%_14%] 2xl:object-[54%_15%]"
+              />
+            </picture>
           )}
 
           {/* Dark mode ambient balance (preserves existing dark mode readability) */}
@@ -146,7 +144,7 @@ export function HomeHero() {
         className="max-w-7xl mx-auto w-full flex-1 lg:flex-initial flex flex-col justify-between lg:justify-center text-center relative z-10"
       >
         {/* Top Centered Name — sits cleanly in open dark café glass above subject's head across all viewports */}
-        <div className="w-full flex justify-center mb-6 md:mb-10 lg:mb-20 relative z-30 pt-1 sm:pt-2 md:pt-2 lg:pt-2">
+        <div className="w-full flex justify-center mb-6 md:mb-10 lg:mb-20 relative z-30 pt-1 sm:pt-2 md:pt-2 lg:pt-2 -translate-y-3 md:translate-y-0">
           <motion.div
             variants={item}
             style={isDesktop ? { y: nameY } : undefined}

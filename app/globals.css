@@ -136,53 +136,7 @@
   }
 }
 
-/* 1. Homepage Hero — Slow Cinematic Pan (plays once on entry, settles into composition) */
-@keyframes heroCinematicPanMobile {
-  0% {
-    transform: scale(1.04) translate3d(-1.1%, 0, 0);
-  }
-  100% {
-    transform: scale(1.04) translate3d(0%, 0, 0);
-  }
-}
-
-@keyframes heroCinematicPanTablet {
-  0% {
-    transform: scale(1.05) translate3d(-1.8%, 0, 0);
-  }
-  100% {
-    transform: scale(1.04) translate3d(0%, 0, 0);
-  }
-}
-
-@keyframes heroCinematicPanDesktop {
-  0% {
-    transform: scale(1.06) translate3d(-2.3%, 0, 0);
-  }
-  100% {
-    transform: scale(1.04) translate3d(0%, 0, 0);
-  }
-}
-
-.hero-cinematic-pan {
-  will-change: transform;
-  transform-origin: center center;
-  animation: heroCinematicPanMobile 11s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-}
-
-@media (min-width: 768px) {
-  .hero-cinematic-pan {
-    animation: heroCinematicPanTablet 12s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-cinematic-pan {
-    animation: heroCinematicPanDesktop 12.5s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-  }
-}
-
-/* 3. Button Hover — Smooth Bottom-to-Top Olive-Green Sliding Fill */
+/* Button Hover — Smooth Bottom-to-Top Olive-Green Sliding Fill */
 .btn-slide {
   position: relative;
   overflow: hidden;
@@ -304,11 +258,6 @@
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;
-  }
-
-  .hero-cinematic-pan {
-    animation: none !important;
-    transform: none !important;
   }
 
   *,
